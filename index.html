@@ -34,6 +34,7 @@ body {
   flex-direction: column;
 }
 
+/* ── NAV ── */
 nav {
   display: flex;
   align-items: center;
@@ -47,7 +48,12 @@ nav {
   z-index: 50;
 }
 
-.nav-logo { display: flex; align-items: center; gap: 10px; }
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .logo-mark {
   width: 32px; height: 32px;
   background: var(--ink);
@@ -55,8 +61,16 @@ nav {
   display: flex; align-items: center; justify-content: center;
   font-size: 15px;
 }
-.logo-text { font-size: 17px; font-weight: 800; letter-spacing: -0.5px; }
+
+.logo-text {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+}
+
 .logo-text span { color: var(--accent); }
+
 .nav-tag {
   font-family: 'Space Mono', monospace;
   font-size: 10px;
@@ -68,6 +82,7 @@ nav {
   border: 1px solid var(--border);
 }
 
+/* ── MAIN ── */
 main {
   flex: 1;
   padding: 36px 24px 80px;
@@ -79,30 +94,43 @@ main {
   gap: 24px;
 }
 
-/* DROP */
+/* ── DROP ZONE ── */
 #drop-shell {
   background: var(--white);
   border: 2px dashed var(--border);
   border-radius: var(--radius);
-  min-height: 300px;
+  min-height: 320px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 18px;
+  gap: 20px;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
-#drop-shell:hover, #drop-shell.over { border-color: var(--accent); background: var(--accent-soft); }
+
+#drop-shell:hover, #drop-shell.over {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
 #drop-shell input { display: none; }
 
-.drop-visual { position: relative; width: 90px; height: 90px; }
+.drop-visual {
+  position: relative;
+  width: 90px; height: 90px;
+}
+
 .drop-ring {
-  position: absolute; inset: 0;
+  position: absolute;
+  inset: 0;
   border-radius: 50%;
-  border: 1.5px solid rgba(0,102,255,0.25);
+  border: 1.5px solid var(--border);
   animation: slow-spin 10s linear infinite;
 }
+
 .drop-ring::after {
   content: '';
   position: absolute;
@@ -113,78 +141,119 @@ main {
   border-radius: 50%;
   box-shadow: 0 0 12px var(--accent);
 }
+
 @keyframes slow-spin { to { transform: rotate(360deg); } }
+
 .drop-inner {
-  position: absolute; inset: 14px;
+  position: absolute;
+  inset: 14px;
   background: var(--bg);
   border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 28px;
   border: 1px solid var(--border);
 }
-.drop-title { font-size: 21px; font-weight: 800; letter-spacing: -0.5px; }
-.drop-desc { font-size: 13px; color: var(--ink2); text-align: center; line-height: 1.6; }
+
+.drop-title {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+}
+
+.drop-desc {
+  font-size: 13px;
+  color: var(--ink2);
+  text-align: center;
+  line-height: 1.6;
+}
+
 .drop-btn {
   padding: 12px 32px;
   background: var(--ink);
   color: var(--white);
   border-radius: 50px;
   font-family: 'Manrope', sans-serif;
-  font-size: 13px; font-weight: 700;
-  border: none; cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
   transition: all 0.2s;
+  letter-spacing: 0.2px;
 }
+
 .drop-btn:hover { background: var(--accent); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,102,255,0.3); }
 
-/* WORKSPACE */
+/* ── WORKSPACE ── */
 #workspace { display: none; flex-direction: column; gap: 20px; }
 #workspace.visible { display: flex; }
 
+/* ── TOP BAR ── */
 .top-bar {
-  display: flex; align-items: center;
+  display: flex;
+  align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap; gap: 10px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
+
 .file-pill {
-  display: flex; align-items: center; gap: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: 50px;
   padding: 6px 14px 6px 8px;
 }
+
 .file-pill-icon {
   width: 26px; height: 26px;
-  background: var(--bg); border-radius: 50%;
+  background: var(--bg);
+  border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-size: 12px;
 }
+
 .file-pill-name {
   font-family: 'Space Mono', monospace;
-  font-size: 11px; color: var(--ink);
-  max-width: 180px; overflow: hidden;
-  text-overflow: ellipsis; white-space: nowrap;
+  font-size: 11px;
+  color: var(--ink);
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
+
 .top-bar-actions { display: flex; gap: 8px; }
 
 .btn-sm {
-  padding: 7px 16px; border-radius: 50px;
+  padding: 7px 16px;
+  border-radius: 50px;
   font-family: 'Manrope', sans-serif;
-  font-size: 12px; font-weight: 600;
-  cursor: pointer; transition: all 0.2s;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
   border: 1px solid var(--border);
-  background: var(--white); color: var(--ink);
+  background: var(--white);
+  color: var(--ink);
 }
-.btn-sm:hover:not(:disabled) { border-color: var(--ink); }
+
+.btn-sm:hover { border-color: var(--ink); }
 .btn-sm:disabled { opacity: 0.35; cursor: not-allowed; }
 .btn-sm.primary { background: var(--ink); color: #fff; border-color: var(--ink); }
-.btn-sm.primary:hover:not(:disabled) { background: var(--accent); border-color: var(--accent); }
+.btn-sm.primary:hover { background: var(--accent); border-color: var(--accent); }
 
-/* CANVAS ROW */
+/* ── CANVAS AREA ── */
 .canvas-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
+
 .img-box {
   background: var(--white);
   border-radius: var(--radius);
@@ -193,71 +262,134 @@ main {
   border: 1px solid var(--border);
   position: relative;
 }
+
 .img-box-label {
-  position: absolute; top: 12px; left: 12px; z-index: 5;
+  position: absolute;
+  top: 12px; left: 12px;
+  z-index: 5;
   font-family: 'Space Mono', monospace;
-  font-size: 9px; font-weight: 700;
-  letter-spacing: 1.5px; text-transform: uppercase;
-  padding: 5px 12px; border-radius: 50px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 50px;
   backdrop-filter: blur(8px);
 }
+
 .img-box-label.orig { background: rgba(17,16,16,0.6); color: #fff; }
 .img-box-label.enh  { background: rgba(0,102,255,0.85); color: #fff; }
 
 .img-box-inner {
   aspect-ratio: 1;
-  display: flex; align-items: center; justify-content: center;
-  background: #f0ede8; overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0ede8;
+  overflow: hidden;
 }
-.img-box-inner canvas { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+.img-box-inner canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
 .img-placeholder {
-  display: flex; flex-direction: column;
-  align-items: center; gap: 10px;
-  opacity: 0.25; font-size: 13px; color: var(--ink2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  opacity: 0.25;
+  font-size: 13px;
+  color: var(--ink2);
 }
+
 .img-placeholder-icon { font-size: 36px; }
 
-/* SLIDER COMPARE */
+/* ── SLIDER COMPARE ── */
 #sc-wrap {
-  display: none; position: relative;
-  background: #111; border-radius: var(--radius);
-  overflow: hidden; aspect-ratio: 1;
-  cursor: col-resize; user-select: none;
+  display: none;
+  position: relative;
+  background: #111;
+  border-radius: var(--radius);
+  overflow: hidden;
+  aspect-ratio: 1;
+  cursor: col-resize;
+  user-select: none;
   box-shadow: var(--shadow-md);
 }
+
 #sc-wrap.visible { display: block; }
-.sc-layer { position: absolute; inset: 0; }
-.sc-layer canvas { width: 100%; height: 100%; object-fit: contain; display: block; }
-.sc-after { clip-path: inset(0 50% 0 0); }
-.sc-divider-line {
-  position: absolute; top: 0; bottom: 0; left: 50%;
-  width: 2px; background: #fff; transform: translateX(-50%);
-  z-index: 10; box-shadow: 0 0 20px rgba(255,255,255,0.5);
+
+.sc-layer {
+  position: absolute;
+  inset: 0;
 }
+
+.sc-layer canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.sc-after {
+  clip-path: inset(0 50% 0 0);
+}
+
+.sc-divider-line {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: #fff;
+  transform: translateX(-50%);
+  z-index: 10;
+  box-shadow: 0 0 20px rgba(255,255,255,0.5);
+}
+
 .sc-handle {
-  position: absolute; top: 50%; left: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  width: 42px; height: 42px; background: var(--white);
+  width: 42px; height: 42px;
+  background: var(--white);
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  font-size: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  border: 2px solid rgba(255,255,255,0.8);
 }
+
 .sc-labels {
-  position: absolute; bottom: 14px; left: 0; right: 0;
-  display: flex; justify-content: space-between;
-  padding: 0 16px; z-index: 8; pointer-events: none;
+  position: absolute;
+  bottom: 14px;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 8;
+  pointer-events: none;
 }
+
 .sc-lbl {
   font-family: 'Space Mono', monospace;
-  font-size: 10px; font-weight: 700;
-  letter-spacing: 1.5px; text-transform: uppercase;
-  padding: 5px 12px; border-radius: 50px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 50px;
   backdrop-filter: blur(6px);
 }
+
 .sc-lbl.before { background: rgba(0,0,0,0.55); color: #fff; }
 .sc-lbl.after  { background: rgba(0,102,255,0.8); color: #fff; }
 
-/* AI CARD */
+/* ── AI CARD ── */
 .ai-card {
   background: var(--white);
   border-radius: var(--radius);
@@ -265,168 +397,307 @@ main {
   box-shadow: var(--shadow-sm);
   overflow: hidden;
 }
+
 .ai-card-top {
-  display: flex; align-items: center; gap: 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
   padding: 18px 22px;
   border-bottom: 1px solid var(--border);
 }
+
 .ai-icon-box {
-  width: 38px; height: 38px; background: var(--ink);
+  width: 38px; height: 38px;
+  background: var(--ink);
   border-radius: 11px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 17px; flex-shrink: 0;
+  font-size: 17px;
+  flex-shrink: 0;
 }
+
 .ai-card-title { font-size: 14px; font-weight: 800; }
-.ai-card-sub { font-size: 12px; color: var(--ink2); margin-top: 2px; }
+.ai-card-sub   { font-size: 12px; color: var(--ink2); margin-top: 2px; }
+
 .ai-card-body { padding: 20px 22px; }
 
+/* IDLE */
 .ai-idle {
-  display: flex; align-items: flex-start; gap: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
   padding: 14px 16px;
-  background: var(--bg); border-radius: 12px;
+  background: var(--bg);
+  border-radius: 12px;
   border: 1px solid var(--border);
 }
+
 .ai-idle-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
 .ai-idle-text { font-size: 13px; color: var(--ink2); line-height: 1.6; }
 .ai-idle-text strong { color: var(--ink); }
 
-.ai-scanning { display: none; flex-direction: column; gap: 14px; }
+/* SCANNING */
+.ai-scanning {
+  display: none;
+  flex-direction: column;
+  gap: 14px;
+}
+
 .ai-scanning.on { display: flex; }
-.scan-status { display: flex; align-items: center; gap: 10px; }
+
+.scan-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .scan-spinner {
   width: 16px; height: 16px;
   border: 2px solid var(--border);
   border-top-color: var(--accent);
   border-radius: 50%;
-  animation: spin 0.7s linear infinite; flex-shrink: 0;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
 }
+
 @keyframes spin { to { transform: rotate(360deg); } }
+
 .scan-status-text {
   font-family: 'Space Mono', monospace;
-  font-size: 11px; color: var(--accent); letter-spacing: 0.5px;
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.5px;
 }
-.scan-track { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+
+.scan-track {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
 .scan-fill {
   height: 100%;
   background: linear-gradient(90deg, var(--accent), #00aaff);
-  border-radius: 2px; width: 0%; transition: width 0.5s ease;
+  border-radius: 2px;
+  width: 0%;
+  transition: width 0.5s ease;
 }
 
-.ai-result { display: none; flex-direction: column; gap: 14px; }
+/* RESULT */
+.ai-result {
+  display: none;
+  flex-direction: column;
+  gap: 14px;
+}
+
 .ai-result.on { display: flex; }
+
 .ai-diagnosis-box {
   padding: 14px 16px;
   background: rgba(0,102,255,0.05);
   border: 1px solid rgba(0,102,255,0.15);
   border-radius: 12px;
-  font-size: 13px; color: var(--ink); line-height: 1.65;
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.65;
   position: relative;
 }
+
 .ai-diagnosis-box::before {
   content: 'CLAUDE AI';
-  position: absolute; top: -9px; left: 14px;
-  background: var(--white); padding: 0 6px;
+  position: absolute;
+  top: -9px; left: 14px;
+  background: var(--white);
+  padding: 0 6px;
   font-family: 'Space Mono', monospace;
-  font-size: 8px; color: var(--accent); letter-spacing: 1.5px;
+  font-size: 8px;
+  color: var(--accent);
+  letter-spacing: 1.5px;
 }
-.params-row { display: flex; flex-wrap: wrap; gap: 8px; }
-.param-tag {
-  display: flex; align-items: center; gap: 6px;
-  padding: 6px 12px;
-  background: var(--bg); border: 1px solid var(--border);
-  border-radius: 50px; font-size: 12px; font-weight: 600;
-}
-.param-tag-name { color: var(--ink2); }
-.param-tag-val { color: var(--ink); font-family: 'Space Mono', monospace; font-size: 11px; }
 
-/* PROCESS STEPS */
+.params-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.param-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.param-tag-name { color: var(--ink2); }
+.param-tag-val  { color: var(--ink); font-family: 'Space Mono', monospace; font-size: 11px; }
+.param-tag-val.pos { color: var(--accent); }
+.param-tag-val.neg { color: #ff4444; }
+
+/* ── PROGRESS ── */
 .process-steps {
-  display: none; align-items: center;
+  display: none;
+  align-items: center;
+  gap: 0;
   background: var(--white);
   border: 1px solid var(--border);
-  border-radius: 14px; overflow: hidden;
+  border-radius: 14px;
+  overflow: hidden;
   box-shadow: var(--shadow-sm);
 }
+
 .process-steps.on { display: flex; }
+
 .ps-item {
-  flex: 1; display: flex; flex-direction: column;
-  align-items: center; gap: 5px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
   padding: 12px 8px;
   border-right: 1px solid var(--border);
-  opacity: 0.3; transition: all 0.3s;
+  opacity: 0.3;
+  transition: all 0.3s;
+  position: relative;
 }
+
 .ps-item:last-child { border-right: none; }
 .ps-item.active { opacity: 1; background: rgba(0,102,255,0.04); }
 .ps-item.done   { opacity: 0.65; }
+
 .ps-item-icon { font-size: 16px; }
+
 .ps-item-label {
   font-family: 'Space Mono', monospace;
-  font-size: 8.5px; letter-spacing: 0.5px;
-  color: var(--ink2); text-align: center;
+  font-size: 8.5px;
+  letter-spacing: 0.5px;
+  color: var(--ink2);
+  text-align: center;
 }
+
 .ps-item.active .ps-item-label { color: var(--accent); }
 .ps-item.done   .ps-item-label { color: var(--green); }
 
-.ps-bar-wrap { display: none; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.ps-bar-wrap {
+  display: none;
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
 .ps-bar-wrap.on { display: block; }
 .ps-bar { height: 100%; background: var(--accent); width: 0%; transition: width 0.4s ease; border-radius: 2px; }
 
-/* ENHANCE BTN */
-.enhance-wrap { display: flex; gap: 10px; }
-.btn-enhance {
-  flex: 1; padding: 16px;
-  background: var(--ink); color: var(--white);
-  border: none; border-radius: 14px;
-  font-family: 'Manrope', sans-serif;
-  font-size: 15px; font-weight: 800;
-  cursor: pointer; letter-spacing: -0.2px;
-  transition: all 0.25s ease;
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  position: relative; overflow: hidden;
+/* ── ENHANCE BTN ── */
+.enhance-wrap {
+  display: flex;
+  gap: 10px;
 }
+
+.btn-enhance {
+  flex: 1;
+  padding: 16px;
+  background: var(--ink);
+  color: var(--white);
+  border: none;
+  border-radius: 14px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  letter-spacing: -0.2px;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-enhance::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent, rgba(255,255,255,0.05));
+}
+
 .btn-enhance:hover:not(:disabled) {
   background: var(--accent);
   transform: translateY(-2px);
   box-shadow: 0 10px 30px rgba(0,102,255,0.35);
 }
+
+.btn-enhance:active:not(:disabled) { transform: translateY(0); }
+
 .btn-enhance:disabled {
-  background: var(--border); color: var(--ink3);
-  cursor: not-allowed; transform: none; box-shadow: none;
+  background: var(--border);
+  color: var(--ink3);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
+
 .btn-enhance .spinner {
   width: 18px; height: 18px;
   border: 2px solid rgba(255,255,255,0.3);
-  border-top-color: #fff; border-radius: 50%;
-  animation: spin 0.7s linear infinite; display: none;
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: none;
 }
+
 .btn-enhance.loading .spinner { display: block; }
 .btn-enhance.loading .btn-lbl { opacity: 0.7; }
 
 .btn-action {
   padding: 16px 20px;
-  background: var(--white); border: 1px solid var(--border);
-  border-radius: 14px; font-family: 'Manrope', sans-serif;
-  font-size: 13px; font-weight: 700; color: var(--ink);
-  cursor: pointer; transition: all 0.2s; white-space: nowrap;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
 }
+
 .btn-action:hover:not(:disabled) { border-color: var(--ink); background: var(--bg); }
 .btn-action:disabled { opacity: 0.3; cursor: not-allowed; }
 
-/* TOAST */
+/* ── TOAST ── */
 .toast {
-  position: fixed; bottom: 28px; left: 50%;
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
   transform: translateX(-50%) translateY(60px);
-  background: var(--ink); color: var(--white);
-  padding: 11px 22px; border-radius: 50px;
-  font-size: 13px; font-weight: 600;
-  box-shadow: var(--shadow-lg); z-index: 200;
+  background: var(--ink);
+  color: var(--white);
+  padding: 11px 22px;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: var(--shadow-lg);
+  z-index: 200;
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  display: flex; align-items: center; gap: 8px; white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
 }
+
 .toast.show { transform: translateX(-50%) translateY(0); }
 
 @media (max-width: 600px) {
   .canvas-row { grid-template-columns: 1fr; }
+  .params-row .param-tag { font-size: 11px; }
 }
 </style>
 </head>
@@ -441,18 +712,23 @@ main {
 </nav>
 
 <main>
+
+  <!-- DROP -->
   <label id="drop-shell">
     <div class="drop-visual">
       <div class="drop-ring"></div>
       <div class="drop-inner">🖼️</div>
     </div>
     <div class="drop-title">Drop your photo here</div>
-    <div class="drop-desc">Claude AI analyzes your image and makes it sharp, clear, and detailed<br>PNG · JPG · WEBP · Runs entirely in your browser</div>
+    <div class="drop-desc">Claude AI analyzes noise, blur & lighting — then enhances automatically<br>PNG · JPG · WEBP · All processing stays in your browser</div>
     <button class="drop-btn" onclick="event.preventDefault();document.getElementById('fi').click()">Choose Photo</button>
     <input type="file" id="fi" accept="image/*">
   </label>
 
+  <!-- WORKSPACE -->
   <div id="workspace">
+
+    <!-- TOP BAR -->
     <div class="top-bar">
       <div class="file-pill">
         <div class="file-pill-icon">📷</div>
@@ -467,14 +743,17 @@ main {
       </div>
     </div>
 
+    <!-- IMAGES -->
     <div class="canvas-row" id="canvas-row">
       <div class="img-box">
         <div class="img-box-label orig">Original</div>
-        <div class="img-box-inner"><canvas id="orig-c"></canvas></div>
+        <div class="img-box-inner">
+          <canvas id="orig-c"></canvas>
+        </div>
       </div>
       <div class="img-box">
         <div class="img-box-label enh">✦ AI Enhanced</div>
-        <div class="img-box-inner">
+        <div class="img-box-inner" id="enh-wrap">
           <div class="img-placeholder" id="enh-ph">
             <div class="img-placeholder-icon">✨</div>
             <div>Tap Enhance Now</div>
@@ -484,32 +763,43 @@ main {
       </div>
     </div>
 
+    <!-- SLIDER COMPARE -->
     <div id="sc-wrap">
-      <div class="sc-layer"><canvas id="sc-orig"></canvas></div>
-      <div class="sc-layer sc-after" id="sc-after-layer"><canvas id="sc-enh"></canvas></div>
-      <div class="sc-divider-line" id="sc-divider"><div class="sc-handle">⇔</div></div>
+      <div class="sc-layer">
+        <canvas id="sc-orig"></canvas>
+      </div>
+      <div class="sc-layer sc-after" id="sc-after-layer">
+        <canvas id="sc-enh"></canvas>
+      </div>
+      <div class="sc-divider-line" id="sc-divider">
+        <div class="sc-handle">⇔</div>
+      </div>
       <div class="sc-labels">
         <div class="sc-lbl before">Before</div>
         <div class="sc-lbl after">After ✦</div>
       </div>
     </div>
 
+    <!-- PROCESS STEPS -->
     <div class="process-steps" id="proc-steps"></div>
     <div class="ps-bar-wrap" id="ps-bar-wrap"><div class="ps-bar" id="ps-bar"></div></div>
 
+    <!-- AI CARD -->
     <div class="ai-card">
       <div class="ai-card-top">
         <div class="ai-icon-box">🧠</div>
         <div>
           <div class="ai-card-title">Claude Vision Analysis</div>
-          <div class="ai-card-sub">AI reads your image and crafts a precise clarity + detail enhancement recipe</div>
+          <div class="ai-card-sub">AI reads your image to detect noise, blur & lighting — then crafts a precise enhancement recipe</div>
         </div>
       </div>
       <div class="ai-card-body">
+        <!-- Idle -->
         <div class="ai-idle" id="ai-idle">
           <div class="ai-idle-icon">🔍</div>
-          <div class="ai-idle-text">Upload a photo and hit <strong>Enhance Now</strong>. Claude will analyze clarity, detail, and noise — then apply targeted processing to make your subject pop out sharply.</div>
+          <div class="ai-idle-text">Upload a photo and hit <strong>Enhance Now</strong>. Claude will analyze the actual noise, blur, and lighting in your image — then apply targeted smoothing and sharpening without touching colors.</div>
         </div>
+        <!-- Scanning -->
         <div class="ai-scanning" id="ai-scan">
           <div class="scan-status">
             <div class="scan-spinner"></div>
@@ -517,6 +807,7 @@ main {
           </div>
           <div class="scan-track"><div class="scan-fill" id="scan-fill"></div></div>
         </div>
+        <!-- Result -->
         <div class="ai-result" id="ai-res">
           <div class="ai-diagnosis-box" id="ai-diag">—</div>
           <div class="params-row" id="params-row"></div>
@@ -524,42 +815,44 @@ main {
       </div>
     </div>
 
+    <!-- ENHANCE BTN -->
     <div class="enhance-wrap">
       <button class="btn-enhance" id="btn-enh">
         <div class="spinner"></div>
         <span class="btn-lbl">✦ Enhance Now</span>
       </button>
-      <button class="btn-action" id="btn-compare2" disabled>Before / After</button>
-      <button class="btn-action" id="btn-dl2" disabled>⬇ Download</button>
     </div>
+
   </div>
 </main>
 
 <div class="toast" id="toast"><span id="ti">✅</span><span id="tm">Done</span></div>
 
+<!-- Working canvases -->
 <canvas id="src-c" style="display:none"></canvas>
 <canvas id="work-c" style="display:none"></canvas>
 
 <script>
 // ─── STATE ────────────────────────────────────────────────────────────────────
-let srcImg = null, enhDone = false;
+let srcImg = null, workCanvas = null, enhDone = false;
 let sliderOpen = false, sliderDrag = false, sliderX = 0.5;
 let fname = '';
 
-const srcC  = document.getElementById('src-c');
-const workC = document.getElementById('work-c');
-const origC = document.getElementById('orig-c');
-const enhC  = document.getElementById('enh-c');
-const scOrig= document.getElementById('sc-orig');
-const scEnh = document.getElementById('sc-enh');
-const scWrap= document.getElementById('sc-wrap');
-const scAfterLayer = document.getElementById('sc-after-layer');
-const scDivider    = document.getElementById('sc-divider');
-const btnEnh  = document.getElementById('btn-enh');
-const btnCmp  = document.getElementById('btn-compare');
-const btnCmp2 = document.getElementById('btn-compare2');
-const btnDl   = document.getElementById('btn-dl');
-const btnDl2  = document.getElementById('btn-dl2');
+// ─── ELEMENTS ─────────────────────────────────────────────────────────────────
+const dropShell  = document.getElementById('drop-shell');
+const workspace  = document.getElementById('workspace');
+const srcC       = document.getElementById('src-c');
+const workC      = document.getElementById('work-c');
+const origC      = document.getElementById('orig-c');
+const enhC       = document.getElementById('enh-c');
+const scOrig     = document.getElementById('sc-orig');
+const scEnh      = document.getElementById('sc-enh');
+const scWrap     = document.getElementById('sc-wrap');
+const scAfter    = document.getElementById('sc-after-layer');
+const scDivider  = document.getElementById('sc-divider');
+const btnEnh     = document.getElementById('btn-enh');
+const btnCmp     = document.getElementById('btn-compare');
+const btnDl      = document.getElementById('btn-dl');
 
 const srcCtx   = srcC.getContext('2d');
 const workCtx  = workC.getContext('2d');
@@ -569,18 +862,20 @@ const scOrigCtx= scOrig.getContext('2d');
 const scEnhCtx = scEnh.getContext('2d');
 
 // ─── FILE LOAD ────────────────────────────────────────────────────────────────
-const dropShell = document.getElementById('drop-shell');
-document.getElementById('fi').addEventListener('change',  e => e.target.files[0] && loadFile(e.target.files[0]));
-document.getElementById('fi2').addEventListener('change', e => e.target.files[0] && loadFile(e.target.files[0]));
+const fi = document.getElementById('fi');
+const fi2= document.getElementById('fi2');
 
 ['dragover','dragleave','drop'].forEach(ev => {
   dropShell.addEventListener(ev, e => {
     e.preventDefault();
-    if (ev === 'dragover') dropShell.classList.add('over');
+    if (ev==='dragover') dropShell.classList.add('over');
     else dropShell.classList.remove('over');
-    if (ev === 'drop' && e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+    if (ev==='drop' && e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
   });
 });
+
+fi.addEventListener('change',  () => fi.files[0]  && loadFile(fi.files[0]));
+fi2.addEventListener('change', () => fi2.files[0] && loadFile(fi2.files[0]));
 
 function loadFile(file) {
   fname = file.name;
@@ -589,41 +884,47 @@ function loadFile(file) {
   const img = new Image();
   img.onload = () => {
     srcImg = img;
-    srcC.width = img.naturalWidth; srcC.height = img.naturalHeight;
+    srcC.width = img.naturalWidth;
+    srcC.height= img.naturalHeight;
     srcCtx.drawImage(img, 0, 0);
 
     fitCanvas(origC, img.naturalWidth, img.naturalHeight);
     origCtx.drawImage(img, 0, 0, origC.width, origC.height);
 
+    // Reset enhanced
     enhC.style.display = 'none';
     document.getElementById('enh-ph').style.display = 'flex';
     enhDone = false;
-    [btnCmp, btnCmp2, btnDl, btnDl2].forEach(b => b.disabled = true);
+    btnCmp.disabled = true;
+    btnDl.disabled  = true;
     sliderOpen = false;
     scWrap.classList.remove('visible');
     document.getElementById('canvas-row').style.display = '';
     resetAI();
     URL.revokeObjectURL(url);
     dropShell.style.display = 'none';
-    document.getElementById('workspace').classList.add('visible');
+    workspace.classList.add('visible');
     toast('📷', 'Photo loaded — tap Enhance Now');
   };
   img.src = url;
 }
 
 function fitCanvas(c, w, h) {
-  const MAX = 900, s = Math.min(1, MAX / Math.max(w, h));
-  c.width = Math.round(w * s); c.height = Math.round(h * s);
+  const MAX = 900;
+  const s = Math.min(1, MAX / Math.max(w, h));
+  c.width  = Math.round(w * s);
+  c.height = Math.round(h * s);
 }
 
-// ─── ENHANCE ─────────────────────────────────────────────────────────────────
-btnEnh.addEventListener('click', run);
-
-async function run() {
+// ─── ENHANCE ──────────────────────────────────────────────────────────────────
+btnEnh.addEventListener('click', async () => {
   if (!srcImg) return;
-  btnEnh.classList.add('loading'); btnEnh.disabled = true;
-  [btnCmp, btnCmp2, btnDl, btnDl2].forEach(b => b.disabled = true);
-  sliderOpen = false; scWrap.classList.remove('visible');
+  btnEnh.classList.add('loading');
+  btnEnh.disabled = true;
+  btnCmp.disabled = true;
+  btnDl.disabled  = true;
+  sliderOpen = false;
+  scWrap.classList.remove('visible');
   document.getElementById('canvas-row').style.display = '';
 
   let params;
@@ -633,56 +934,60 @@ async function run() {
     params = await callClaude();
     showResult(params);
   } catch(e) {
-    console.warn('API error, using auto:', e);
+    console.warn('Claude API error, using auto:', e);
     params = autoParams();
     showResult(params);
+    toast('⚡', 'Smart auto-enhancement applied');
   }
 
   await applyPipeline(params);
 
-  btnEnh.classList.remove('loading'); btnEnh.disabled = false;
-  [btnCmp, btnCmp2, btnDl, btnDl2].forEach(b => b.disabled = false);
+  btnEnh.classList.remove('loading');
+  btnEnh.disabled = false;
+  btnCmp.disabled = false;
+  btnDl.disabled  = false;
   enhDone = true;
   toast('✦', 'Enhancement complete!');
-}
+});
 
-// ─── CLAUDE VISION ────────────────────────────────────────────────────────────
+// ─── CLAUDE VISION API ────────────────────────────────────────────────────────
 async function callClaude() {
+  // Resize to max 1024 for API
   const ac = document.createElement('canvas');
   const s  = Math.min(1, 1024 / Math.max(srcC.width, srcC.height));
-  ac.width = Math.round(srcC.width * s); ac.height = Math.round(srcC.height * s);
+  ac.width  = Math.round(srcC.width  * s);
+  ac.height = Math.round(srcC.height * s);
   ac.getContext('2d').drawImage(srcC, 0, 0, ac.width, ac.height);
   const b64 = ac.toDataURL('image/jpeg', 0.88).split(',')[1];
 
-  const prompt = `You are an expert photo clarity AI. Analyze this image and determine parameters to make the subject(s) look sharp, clear, and defined — like a professional enhancement tool. Focus on: making subjects "pop", recovering detail clarity, removing softness/haziness, and improving local contrast.
+  const prompt = `You are an expert image restoration AI. Your job is ONLY to remove noise/blur and smooth the image — do NOT alter colors, saturation, contrast, or brightness significantly.
 
-Return ONLY a valid JSON object (no markdown):
+Analyze this image carefully. Return ONLY a valid JSON object with these exact fields (no markdown, no explanation):
+
 {
-  "diagnosis": "2-3 sentences: what you see, what makes it look soft/flat, what enhancement is needed to make subject pop clearly",
-  "hazeRemoval": <0-100, how much to dehaze/defog the image for clarity>,
-  "localContrastBoost": <0.0-1.5, strength of local contrast/clarity enhancement — this is the main 'pop' effect>,
-  "localContrastRadius": <4-20, radius in pixels for local contrast (larger = broader contrast zones)>,
-  "denoiseStrength": <0-100, noise removal before sharpening>,
-  "denoiseRadius": <1-4, spatial radius for bilateral denoise>,
-  "denoiseSigma": <5-60, color sigma for bilateral>,
-  "edgeSharpenAmount": <0.0-2.0, unsharp mask amount — how much to sharpen edges>,
-  "edgeSharpenRadius": <0.5-3.0, blur radius for unsharp mask>,
-  "edgeSharpenThreshold": <1-12, edge threshold — lower = sharpen more edges>,
-  "microTextureBoost": <0.0-1.0, recover fine surface texture detail>,
-  "subjectClarityPasses": <1-3, extra clarity passes for strong pop effect>,
-  "shadowLift": <0-40, subtly lift dark areas to reveal hidden detail>,
-  "highlightRecovery": <0-40, recover blown highlights>,
-  "finishingSharpen": <0.0-0.8, final light sharpen to crisp the result>
+  "diagnosis": "2-3 sentences describing: what type of photo this is, what noise/blur/artifacts you see, what specific restoration is needed",
+  "noiseLevel": <0-100, how much noise/grain is visible>,
+  "blurLevel": <0-100, how much softness/blur needs correction>,
+  "smoothingPasses": <1-4, how many bilateral filter passes needed>,
+  "smoothingRadius": <1-5, spatial radius for bilateral filter>,
+  "smoothingSigma": <5-80, color sigma for bilateral filter — higher = more aggressive smoothing>,
+  "sharpAmount": <0.0-1.5, unsharp mask strength — keep low 0.3-0.8 for natural look>,
+  "sharpRadius": <0.5-2.5, blur radius for unsharp mask>,
+  "sharpThreshold": <0-15, edge threshold for unsharp mask>,
+  "edgeProtection": <0-100, how strongly to protect edges during smoothing>,
+  "microDetailBoost": <0.0-1.0, subtle high-frequency detail recovery>,
+  "skinSmoothStrength": <0-100, if portrait: skin smoothing level>,
+  "finalSharpPass": <true|false, whether to do a final light sharpen pass>
 }
 
-The goal: make the image look like the subject is clearly defined with natural depth and sharpness — not over-processed. Return ONLY the JSON.`;
+Focus ONLY on: noise removal, blur correction, surface smoothing, detail recovery. Do NOT suggest color/contrast/brightness changes. Return ONLY the JSON.`;
 
   const resp = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       model: 'claude-sonnet-4-20250514',
-      max_tokens: 900,
+      max_tokens: 800,
       messages: [{
         role: 'user',
         content: [
@@ -701,153 +1006,194 @@ The goal: make the image look like the subject is clearly defined with natural d
 
 function autoParams() {
   return {
-    diagnosis: "Photo shows moderate softness with flat local contrast. Applied clarity boost, bilateral denoising, and precision edge sharpening to make the subject pop out clearly with natural depth.",
-    hazeRemoval: 30,
-    localContrastBoost: 0.7,
-    localContrastRadius: 8,
-    denoiseStrength: 40,
-    denoiseRadius: 2,
-    denoiseSigma: 22,
-    edgeSharpenAmount: 0.9,
-    edgeSharpenRadius: 1.2,
-    edgeSharpenThreshold: 3,
-    microTextureBoost: 0.5,
-    subjectClarityPasses: 2,
-    shadowLift: 15,
-    highlightRecovery: 10,
-    finishingSharpen: 0.35
+    diagnosis: "Applied smart automatic enhancement. Detected moderate noise — applied bilateral smoothing passes with edge protection, followed by precision unsharp masking to recover fine details.",
+    noiseLevel: 45, blurLevel: 20,
+    smoothingPasses: 2, smoothingRadius: 2, smoothingSigma: 25,
+    sharpAmount: 0.55, sharpRadius: 1.2, sharpThreshold: 4,
+    edgeProtection: 70, microDetailBoost: 0.4,
+    skinSmoothStrength: 30, finalSharpPass: true
   };
 }
 
-// ─── PIPELINE ─────────────────────────────────────────────────────────────────
+// ─── PIXEL PIPELINE ───────────────────────────────────────────────────────────
 async function applyPipeline(p) {
-  const steps = [];
-
-  if ((p.hazeRemoval || 0) > 0)
-    steps.push({ icon: '🌁', label: 'Dehaze', fn: () => dehaze(p.hazeRemoval) });
-
-  if ((p.denoiseStrength || 0) > 0)
-    steps.push({ icon: '🌫️', label: 'Denoise', fn: () => bilateralFilter(p.denoiseRadius||2, p.denoiseSigma||22) });
-
-  const clarityPasses = Math.max(1, Math.min(3, p.subjectClarityPasses || 1));
-  for (let i = 0; i < clarityPasses; i++)
-    steps.push({ icon: i===0?'✦':'🔷', label: i===0?'Clarity':`Clarity ${i+1}`, fn: () => localContrast(p.localContrastBoost||0.7, p.localContrastRadius||8) });
-
-  if ((p.shadowLift || 0) > 0 || (p.highlightRecovery || 0) > 0)
-    steps.push({ icon: '☀️', label: 'Tone', fn: () => toneRecovery(p.shadowLift||0, p.highlightRecovery||0) });
-
-  if ((p.microTextureBoost || 0) > 0)
-    steps.push({ icon: '🔎', label: 'Texture', fn: () => microTexture(p.microTextureBoost) });
-
-  if ((p.edgeSharpenAmount || 0) > 0)
-    steps.push({ icon: '🔬', label: 'Sharpen', fn: () => unsharpMask(p.edgeSharpenAmount, p.edgeSharpenRadius||1.2, p.edgeSharpenThreshold||3) });
-
-  if ((p.finishingSharpen || 0) > 0)
-    steps.push({ icon: '💎', label: 'Finish', fn: () => unsharpMask(p.finishingSharpen, 0.5, 5) });
-
+  const steps = buildSteps(p);
   showSteps(steps);
 
-  workC.width = srcC.width; workC.height = srcC.height;
+  // Full resolution work canvas
+  workC.width  = srcC.width;
+  workC.height = srcC.height;
   workCtx.drawImage(srcC, 0, 0);
 
   for (let i = 0; i < steps.length; i++) {
-    activateStep(i); setBar((i / steps.length) * 88);
+    activateStep(i);
+    setBar((i / steps.length) * 88);
     await delay(30);
     await steps[i].fn();
     doneStep(i);
   }
 
-  setBar(100); await delay(150);
+  setBar(100);
+  await delay(120);
 
-  // Show result
+  // Display result
   fitCanvas(enhC, workC.width, workC.height);
   enhCtx.drawImage(workC, 0, 0, enhC.width, enhC.height);
   enhC.style.display = 'block';
   document.getElementById('enh-ph').style.display = 'none';
 
-  // Slider
+  // Slider canvases
   fitCanvas(scOrig, srcC.width, srcC.height);
   scOrigCtx.drawImage(srcC, 0, 0, scOrig.width, scOrig.height);
   fitCanvas(scEnh, workC.width, workC.height);
   scEnhCtx.drawImage(workC, 0, 0, scEnh.width, scEnh.height);
 
-  setTimeout(hideSteps, 700);
+  workCanvas = workC;
+  setTimeout(hideSteps, 600);
 }
 
-// ─── ALGORITHMS ──────────────────────────────────────────────────────────────
+function buildSteps(p) {
+  const steps = [];
+  const passes = Math.max(1, Math.min(4, p.smoothingPasses || 2));
+  const radius = Math.max(1, Math.min(5, p.smoothingRadius || 2));
+  const sigma  = Math.max(5, Math.min(80, p.smoothingSigma || 25));
+  const edgeProt = (p.edgeProtection || 70) / 100;
 
-// 1. DEHAZE — removes haze/flatness by boosting local contrast against estimated atmosphere
-async function dehaze(strength) {
-  const W = workC.width, H = workC.height;
-  const data = workCtx.getImageData(0, 0, W, H);
-  const d = data.data;
-  const t = strength / 100;
+  // Pass 1: Heavy bilateral (main denoising)
+  steps.push({
+    icon: '🌫️', label: 'Denoise',
+    fn: () => bilateralFilter(radius + 1, sigma * 1.2, edgeProt)
+  });
 
-  // Estimate atmospheric light (average of brightest 0.1% pixels)
-  let bright = [];
-  for (let i = 0; i < d.length; i += 4) {
-    const lum = 0.299*d[i] + 0.587*d[i+1] + 0.114*d[i+2];
-    bright.push(lum);
+  // Pass 2+: Additional smoothing passes
+  for (let i = 1; i < passes; i++) {
+    steps.push({
+      icon: '🫧', label: `Smooth ${i+1}`,
+      fn: () => bilateralFilter(radius, sigma * 0.7, edgeProt)
+    });
   }
-  bright.sort((a,b) => b-a);
-  const atmo = bright[Math.floor(bright.length * 0.001)] || 220;
 
-  for (let i = 0; i < d.length; i += 4) {
-    for (let c = 0; c < 3; c++) {
-      // Dark channel prior: enhance pixels that are darker than atmospheric
-      const ratio = d[i+c] / (atmo || 255);
-      const dehazed = (d[i+c] - t * atmo) / Math.max(0.1, 1 - t);
-      d[i+c] = clamp(lerp(d[i+c], dehazed, t * 0.6));
-    }
+  // Skin smoothing (extra pass with high sigma, low edge protect = softer)
+  if ((p.skinSmoothStrength || 0) > 20) {
+    const skinStr = (p.skinSmoothStrength / 100);
+    steps.push({
+      icon: '✨', label: 'Surface',
+      fn: () => bilateralFilter(Math.ceil(radius * skinStr + 1), sigma * skinStr * 1.5, 0.3)
+    });
   }
-  workCtx.putImageData(data, 0, 0);
+
+  // Micro detail boost (high-frequency recovery before sharpening)
+  if ((p.microDetailBoost || 0) > 0.1) {
+    steps.push({
+      icon: '🔎', label: 'Detail',
+      fn: () => microDetailRecover(p.microDetailBoost)
+    });
+  }
+
+  // Unsharp mask (edge sharpening)
+  if ((p.sharpAmount || 0) > 0.05) {
+    steps.push({
+      icon: '🔬', label: 'Sharpen',
+      fn: () => unsharpMask(p.sharpAmount, p.sharpRadius || 1.2, p.sharpThreshold || 4)
+    });
+  }
+
+  // Final light pass
+  if (p.finalSharpPass) {
+    steps.push({
+      icon: '💎', label: 'Finish',
+      fn: () => unsharpMask(0.25, 0.6, 6)
+    });
+  }
+
+  return steps;
 }
 
-// 2. BILATERAL FILTER — edge-preserving denoise
-async function bilateralFilter(radius, sigmaColor) {
+// ── BILATERAL FILTER (edge-preserving smooth) ──────────────────────────────
+// This is the core uTool-like effect: blurs noise but keeps hard edges sharp
+async function bilateralFilter(radius, sigmaColor, edgeProt) {
   const W = workC.width, H = workC.height;
   const src = workCtx.getImageData(0, 0, W, H);
   const dst = workCtx.createImageData(W, H);
   const s = src.data, d = dst.data;
-  const r = Math.max(1, Math.min(radius, 5));
+
+  const r     = Math.max(1, Math.min(radius, 6));
   const sigC2 = (sigmaColor * sigmaColor * 2) || 1;
-  const sigS2 = (r * r * 0.8) || 1;
+  const sigS2 = (r * r * 0.75) || 1;
+  // Edge protection: when edgeProt is high, we reduce influence of pixels across edges
+  const edgeMul = 1 + edgeProt * 5;
 
   for (let y = 0; y < H; y++) {
     for (let x = 0; x < W; x++) {
-      const ci = (y*W+x)*4;
-      const cR=s[ci], cG=s[ci+1], cB=s[ci+2];
-      let wSum=0, sR=0, sG=0, sB=0;
-      for (let dy=-r; dy<=r; dy++) {
-        const ny=Math.min(H-1,Math.max(0,y+dy));
-        for (let dx=-r; dx<=r; dx++) {
-          const nx=Math.min(W-1,Math.max(0,x+dx));
-          const ni=(ny*W+nx)*4;
-          const nR=s[ni], nG=s[ni+1], nB=s[ni+2];
-          const sp=Math.exp(-(dx*dx+dy*dy)/sigS2);
-          const cd=(cR-nR)**2+(cG-nG)**2+(cB-nB)**2;
-          const cw=Math.exp(-cd/sigC2);
-          const w=sp*cw;
-          sR+=nR*w; sG+=nG*w; sB+=nB*w; wSum+=w;
+      const ci = (y * W + x) * 4;
+      const cR = s[ci], cG = s[ci+1], cB = s[ci+2];
+
+      let wSum = 0, sR = 0, sG = 0, sB = 0;
+
+      for (let dy = -r; dy <= r; dy++) {
+        const ny = Math.min(H-1, Math.max(0, y + dy));
+        for (let dx = -r; dx <= r; dx++) {
+          const nx = Math.min(W-1, Math.max(0, x + dx));
+          const ni = (ny * W + nx) * 4;
+          const nR = s[ni], nG = s[ni+1], nB = s[ni+2];
+
+          // Spatial Gaussian
+          const spatial = Math.exp(-(dx*dx + dy*dy) / sigS2);
+
+          // Color/range Gaussian (key to bilateral — pixels with similar color get high weight)
+          const colorDist = (cR-nR)**2 + (cG-nG)**2 + (cB-nB)**2;
+          const colorW = Math.exp(-colorDist / sigC2);
+
+          const w = spatial * colorW;
+          sR += nR * w; sG += nG * w; sB += nB * w;
+          wSum += w;
         }
       }
-      d[ci]=clamp(sR/wSum); d[ci+1]=clamp(sG/wSum); d[ci+2]=clamp(sB/wSum); d[ci+3]=s[ci+3];
+
+      d[ci]   = clamp(sR / wSum);
+      d[ci+1] = clamp(sG / wSum);
+      d[ci+2] = clamp(sB / wSum);
+      d[ci+3] = s[ci+3];
     }
   }
   workCtx.putImageData(dst, 0, 0);
 }
 
-// 3. LOCAL CONTRAST — the KEY "pop" effect, like uTool's clarity engine
-// Uses a large-radius unsharp mask on luminance only to boost mid-tone contrast
-// This is what makes the subject "lift" out of the image
-async function localContrast(strength, radius) {
+// ── MICRO DETAIL RECOVERY ─────────────────────────────────────────────────
+// Recovers fine textures lost during smoothing using a subtle high-pass blend
+async function microDetailRecover(strength) {
   const W = workC.width, H = workC.height;
 
-  // Blur with large radius to get local average
-  const blurC = document.createElement('canvas');
-  blurC.width = W; blurC.height = H;
-  const bCtx = blurC.getContext('2d');
-  bCtx.filter = `blur(${Math.max(2, radius)}px)`;
+  // Get current (smoothed)
+  const smooth = workCtx.getImageData(0, 0, W, H);
+
+  // Blur the smoothed version lightly
+  const bc = document.createElement('canvas');
+  bc.width = W; bc.height = H;
+  const bCtx = bc.getContext('2d');
+  bCtx.filter = 'blur(1px)';
+  bCtx.drawImage(workC, 0, 0);
+  const blurred = bCtx.getImageData(0, 0, W, H);
+
+  const sm = smooth.data, bl = blurred.data;
+
+  // High-pass = smoothed - blurred, blend back in
+  for (let i = 0; i < sm.length; i += 4) {
+    for (let c = 0; c < 3; c++) {
+      const hp  = sm[i+c] - bl[i+c]; // high-pass signal
+      sm[i+c] = clamp(sm[i+c] + hp * strength * 0.6);
+    }
+  }
+  workCtx.putImageData(smooth, 0, 0);
+}
+
+// ── UNSHARP MASK ──────────────────────────────────────────────────────────
+async function unsharpMask(amount, blurR, threshold) {
+  const W = workC.width, H = workC.height;
+  const bc = document.createElement('canvas');
+  bc.width = W; bc.height = H;
+  const bCtx = bc.getContext('2d');
+  bCtx.filter = `blur(${Math.max(0.4, blurR)}px)`;
   bCtx.drawImage(workC, 0, 0);
 
   const orig    = workCtx.getImageData(0, 0, W, H);
@@ -855,151 +1201,29 @@ async function localContrast(strength, radius) {
   const o = orig.data, b = blurred.data;
 
   for (let i = 0; i < o.length; i += 4) {
-    // Work in luminance to avoid color shifts
-    const lumO = 0.299*o[i] + 0.587*o[i+1] + 0.114*o[i+2];
-    const lumB = 0.299*b[i] + 0.587*b[i+1] + 0.114*b[i+2];
-    const diff = lumO - lumB; // local contrast signal
-
-    // Apply contrast boost: if brighter than local avg → boost brighter, if darker → boost darker
-    // This creates the "pop" — subjects get more separated from their surroundings
-    const boost = diff * strength;
-
     for (let c = 0; c < 3; c++) {
-      o[i+c] = clamp(o[i+c] + boost);
+      const diff = o[i+c] - b[i+c];
+      if (Math.abs(diff) > threshold) {
+        o[i+c] = clamp(o[i+c] + diff * amount);
+      }
     }
   }
   workCtx.putImageData(orig, 0, 0);
 }
 
-// 4. TONE RECOVERY — lift shadows, recover highlights without color shift
-async function toneRecovery(shadowLift, highlightRecovery) {
-  const data = workCtx.getImageData(0, 0, workC.width, workC.height);
-  const d = data.data;
-  for (let i = 0; i < d.length; i += 4) {
-    const lum = 0.299*d[i] + 0.587*d[i+1] + 0.114*d[i+2];
-
-    // Shadow lift: brighten dark areas to reveal hidden detail
-    if (shadowLift > 0 && lum < 100) {
-      const mask = (1 - lum/100);
-      const lift = mask * shadowLift * 0.8;
-      // Use a toe-curve lift (sqrt makes it feel natural)
-      const factor = Math.sqrt(mask) * shadowLift * 0.6;
-      d[i]   = clamp(d[i]   + factor);
-      d[i+1] = clamp(d[i+1] + factor);
-      d[i+2] = clamp(d[i+2] + factor);
-    }
-
-    // Highlight recovery: pull back blown highlights
-    if (highlightRecovery > 0 && lum > 200) {
-      const mask = (lum - 200) / 55;
-      const pull = mask * highlightRecovery * 0.5;
-      d[i]   = clamp(d[i]   - pull);
-      d[i+1] = clamp(d[i+1] - pull);
-      d[i+2] = clamp(d[i+2] - pull);
-    }
-  }
-  workCtx.putImageData(data, 0, 0);
-}
-
-// 5. MICRO TEXTURE — recover fine surface detail via high-pass blend
-async function microTexture(strength) {
-  const W = workC.width, H = workC.height;
-  const smooth = workCtx.getImageData(0, 0, W, H);
-  const bc = document.createElement('canvas');
-  bc.width=W; bc.height=H;
-  const bCtx=bc.getContext('2d');
-  bCtx.filter='blur(0.8px)';
-  bCtx.drawImage(workC,0,0);
-  const blurred=bCtx.getImageData(0,0,W,H);
-  const sm=smooth.data, bl=blurred.data;
-  for (let i=0;i<sm.length;i+=4) {
-    for (let c=0;c<3;c++) {
-      const hp=sm[i+c]-bl[i+c];
-      sm[i+c]=clamp(sm[i+c]+hp*strength*0.7);
-    }
-  }
-  workCtx.putImageData(smooth,0,0);
-}
-
-// 6. UNSHARP MASK — precise edge sharpening
-async function unsharpMask(amount, blurR, threshold) {
-  const W=workC.width, H=workC.height;
-  const bc=document.createElement('canvas');
-  bc.width=W; bc.height=H;
-  const bCtx=bc.getContext('2d');
-  bCtx.filter=`blur(${Math.max(0.4,blurR)}px)`;
-  bCtx.drawImage(workC,0,0);
-  const orig=workCtx.getImageData(0,0,W,H);
-  const blurred=bCtx.getImageData(0,0,W,H);
-  const o=orig.data, b=blurred.data;
-  for (let i=0;i<o.length;i+=4) {
-    for (let c=0;c<3;c++) {
-      const diff=o[i+c]-b[i+c];
-      if (Math.abs(diff)>threshold) o[i+c]=clamp(o[i+c]+diff*amount);
-    }
-  }
-  workCtx.putImageData(orig,0,0);
-}
-
-// ─── UTILS ───────────────────────────────────────────────────────────────────
+// ─── UTILS ────────────────────────────────────────────────────────────────────
 function clamp(v) { return v < 0 ? 0 : v > 255 ? 255 : Math.round(v); }
-function lerp(a, b, t) { return a + (b-a)*t; }
 function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-// ─── UI HELPERS ──────────────────────────────────────────────────────────────
-function resetAI() {
-  document.getElementById('ai-idle').style.display='flex';
-  document.getElementById('ai-scan').classList.remove('on');
-  document.getElementById('ai-res').classList.remove('on');
-}
-
-function showScan(txt) {
-  document.getElementById('ai-idle').style.display='none';
-  document.getElementById('ai-res').classList.remove('on');
-  document.getElementById('ai-scan').classList.add('on');
-  document.getElementById('scan-txt').textContent=txt;
-  document.getElementById('scan-fill').style.width='0%';
-}
-
-async function animateScan() {
-  const fill=document.getElementById('scan-fill');
-  const msgs=['Analyzing image clarity...','Detecting softness & haze...','Computing local contrast map...','Building enhancement recipe...'];
-  for(let i=0;i<msgs.length;i++){
-    document.getElementById('scan-txt').textContent=msgs[i];
-    fill.style.width=((i+1)/msgs.length*80)+'%';
-    await delay(320);
-  }
-}
-
-function showResult(p) {
-  document.getElementById('ai-scan').classList.remove('on');
-  document.getElementById('ai-idle').style.display='none';
-  document.getElementById('ai-diag').textContent=p.diagnosis||'Analysis complete.';
-  const pr=document.getElementById('params-row');
-  pr.innerHTML='';
-  const show=[
-    {k:'hazeRemoval',l:'Dehaze'},{k:'localContrastBoost',l:'Clarity'},{k:'localContrastRadius',l:'Radius'},
-    {k:'denoiseStrength',l:'Denoise'},{k:'edgeSharpenAmount',l:'Sharpen'},
-    {k:'microTextureBoost',l:'Texture'},{k:'shadowLift',l:'Shadow Lift'},
-    {k:'subjectClarityPasses',l:'Pop Passes'},{k:'finishingSharpen',l:'Finish'},
-  ];
-  show.forEach(({k,l})=>{
-    const v=p[k]; if(v==null||v===0||v===false) return;
-    const tag=document.createElement('div'); tag.className='param-tag';
-    const vs=typeof v==='number'?(Number.isInteger(v)?v:v.toFixed(2)):v;
-    tag.innerHTML=`<span class="param-tag-name">${l}</span><span class="param-tag-val">${vs}</span>`;
-    pr.appendChild(tag);
-  });
-  document.getElementById('ai-res').classList.add('on');
-}
-
+// ─── PROGRESS UI ─────────────────────────────────────────────────────────────
 function showSteps(steps) {
-  const el=document.getElementById('proc-steps');
-  el.innerHTML='';
-  steps.forEach((s,i)=>{
-    const d=document.createElement('div');
-    d.className='ps-item'; d.id='ps-'+i;
-    d.innerHTML=`<div class="ps-item-icon">${s.icon}</div><div class="ps-item-label">${s.label}</div>`;
+  const el = document.getElementById('proc-steps');
+  el.innerHTML = '';
+  steps.forEach((s, i) => {
+    const d = document.createElement('div');
+    d.className = 'ps-item';
+    d.id = 'ps-' + i;
+    d.innerHTML = `<div class="ps-item-icon">${s.icon}</div><div class="ps-item-label">${s.label}</div>`;
     el.appendChild(d);
   });
   el.classList.add('on');
@@ -1008,81 +1232,143 @@ function showSteps(steps) {
 }
 
 function activateStep(i) {
-  document.querySelectorAll('.ps-item').forEach((el,j)=>{
-    el.className='ps-item'+(j<i?' done':j===i?' active':'');
+  document.querySelectorAll('.ps-item').forEach((el, j) => {
+    el.className = 'ps-item' + (j < i ? ' done' : j === i ? ' active' : '');
   });
 }
 
 function doneStep(i) {
-  const el=document.getElementById('ps-'+i);
-  if(el) el.className='ps-item done';
+  const el = document.getElementById('ps-' + i);
+  if (el) el.className = 'ps-item done';
 }
 
-function setBar(pct) { document.getElementById('ps-bar').style.width=pct+'%'; }
+function setBar(pct) {
+  document.getElementById('ps-bar').style.width = pct + '%';
+}
+
 function hideSteps() {
   document.getElementById('proc-steps').classList.remove('on');
   document.getElementById('ps-bar-wrap').classList.remove('on');
 }
 
-// ─── SLIDER COMPARE ──────────────────────────────────────────────────────────
-function toggleSlider() {
-  if(!enhDone) return;
-  sliderOpen=!sliderOpen;
-  if(sliderOpen){
-    scWrap.classList.add('visible');
-    document.getElementById('canvas-row').style.display='none';
-    btnCmp.textContent=btnCmp2.textContent='Side by Side';
-    sliderX=0.5; updateSlider();
-  } else {
-    scWrap.classList.remove('visible');
-    document.getElementById('canvas-row').style.display='';
-    btnCmp.textContent=btnCmp2.textContent='Before / After';
+// ─── AI UI ────────────────────────────────────────────────────────────────────
+function resetAI() {
+  document.getElementById('ai-idle').style.display = 'flex';
+  document.getElementById('ai-scan').classList.remove('on');
+  document.getElementById('ai-res').classList.remove('on');
+}
+
+function showScan(txt) {
+  document.getElementById('ai-idle').style.display = 'none';
+  document.getElementById('ai-res').classList.remove('on');
+  document.getElementById('ai-scan').classList.add('on');
+  document.getElementById('scan-txt').textContent = txt;
+  document.getElementById('scan-fill').style.width = '0%';
+}
+
+async function animateScan() {
+  const fill = document.getElementById('scan-fill');
+  const msgs = [
+    'Analyzing noise & grain...',
+    'Detecting blur levels...',
+    'Computing smoothing recipe...',
+    'Preparing enhancement plan...'
+  ];
+  for (let i = 0; i < msgs.length; i++) {
+    document.getElementById('scan-txt').textContent = msgs[i];
+    fill.style.width = ((i + 1) / msgs.length * 80) + '%';
+    await delay(350);
   }
 }
 
-btnCmp.addEventListener('click', toggleSlider);
-btnCmp2.addEventListener('click', toggleSlider);
+function showResult(p) {
+  document.getElementById('ai-scan').classList.remove('on');
+  document.getElementById('ai-idle').style.display = 'none';
 
-scWrap.addEventListener('mousedown', e=>{sliderDrag=true; moveSlider(e);});
-scWrap.addEventListener('touchstart',e=>{sliderDrag=true; moveSlider(e.touches[0]);},{passive:true});
-document.addEventListener('mousemove',e=>{if(sliderDrag)moveSlider(e);});
-document.addEventListener('touchmove',e=>{if(sliderDrag)moveSlider(e.touches[0]);},{passive:true});
-document.addEventListener('mouseup',()=>sliderDrag=false);
-document.addEventListener('touchend',()=>sliderDrag=false);
+  document.getElementById('ai-diag').textContent = p.diagnosis || 'Analysis complete.';
+
+  const pr = document.getElementById('params-row');
+  pr.innerHTML = '';
+
+  const show = [
+    { k: 'noiseLevel',        label: 'Noise',      unit: '%'  },
+    { k: 'blurLevel',         label: 'Blur',        unit: '%'  },
+    { k: 'smoothingPasses',   label: 'Passes',      unit: 'x'  },
+    { k: 'smoothingRadius',   label: 'Radius',      unit: 'px' },
+    { k: 'smoothingSigma',    label: 'Sigma',       unit: ''   },
+    { k: 'sharpAmount',       label: 'Sharpen',     unit: ''   },
+    { k: 'microDetailBoost',  label: 'Detail',      unit: ''   },
+    { k: 'skinSmoothStrength',label: 'Surface',     unit: '%'  },
+    { k: 'edgeProtection',    label: 'Edge Prot',   unit: '%'  },
+  ];
+
+  show.forEach(({ k, label, unit }) => {
+    const v = p[k];
+    if (v == null || v === 0 || v === false) return;
+    const tag = document.createElement('div');
+    tag.className = 'param-tag';
+    const valStr = typeof v === 'number' ? (Number.isInteger(v) ? v : v.toFixed(2)) : v;
+    tag.innerHTML = `<span class="param-tag-name">${label}</span><span class="param-tag-val">${valStr}${unit}</span>`;
+    pr.appendChild(tag);
+  });
+
+  document.getElementById('ai-res').classList.add('on');
+}
+
+// ─── SLIDER COMPARE ───────────────────────────────────────────────────────────
+btnCmp.addEventListener('click', () => {
+  if (!enhDone) return;
+  sliderOpen = !sliderOpen;
+  if (sliderOpen) {
+    scWrap.classList.add('visible');
+    document.getElementById('canvas-row').style.display = 'none';
+    btnCmp.textContent = 'Side by Side';
+    sliderX = 0.5;
+    updateSlider();
+  } else {
+    scWrap.classList.remove('visible');
+    document.getElementById('canvas-row').style.display = '';
+    btnCmp.textContent = 'Before / After';
+  }
+});
+
+scWrap.addEventListener('mousedown',  e => { sliderDrag = true; moveSlider(e); });
+scWrap.addEventListener('touchstart', e => { sliderDrag = true; moveSlider(e.touches[0]); }, { passive: true });
+document.addEventListener('mousemove',  e => { if (sliderDrag) moveSlider(e); });
+document.addEventListener('touchmove',  e => { if (sliderDrag) moveSlider(e.touches[0]); }, { passive: true });
+document.addEventListener('mouseup',  () => sliderDrag = false);
+document.addEventListener('touchend', () => sliderDrag = false);
 
 function moveSlider(e) {
-  const r=scWrap.getBoundingClientRect();
-  sliderX=Math.max(0.02,Math.min(0.98,(e.clientX-r.left)/r.width));
+  const r = scWrap.getBoundingClientRect();
+  sliderX = Math.max(0.02, Math.min(0.98, (e.clientX - r.left) / r.width));
   updateSlider();
 }
 
 function updateSlider() {
-  scDivider.style.left=(sliderX*100)+'%';
-  scAfterLayer.style.clipPath=`inset(0 ${((1-sliderX)*100).toFixed(2)}% 0 0)`;
+  scDivider.style.left = (sliderX * 100) + '%';
+  scAfter.style.clipPath = `inset(0 ${((1 - sliderX) * 100).toFixed(2)}% 0 0)`;
 }
 
 // ─── DOWNLOAD ────────────────────────────────────────────────────────────────
-function doDownload() {
-  if(!enhDone) return;
-  const link=document.createElement('a');
-  link.download=(fname.replace(/\.[^.]+$/,'')||'photo')+'-clearai.png';
-  link.href=workC.toDataURL('image/png');
+btnDl.addEventListener('click', () => {
+  if (!workCanvas) return;
+  const link = document.createElement('a');
+  link.download = (fname.replace(/\.[^.]+$/, '') || 'photo') + '-clearai.png';
+  link.href = workCanvas.toDataURL('image/png');
   link.click();
-  toast('⬇️','Downloading...');
-}
-
-btnDl.addEventListener('click', doDownload);
-btnDl2.addEventListener('click', doDownload);
+  toast('⬇️', 'Downloading...');
+});
 
 // ─── TOAST ───────────────────────────────────────────────────────────────────
 let toastT;
-function toast(icon,msg){
-  document.getElementById('ti').textContent=icon;
-  document.getElementById('tm').textContent=msg;
-  const el=document.getElementById('toast');
+function toast(icon, msg) {
+  document.getElementById('ti').textContent = icon;
+  document.getElementById('tm').textContent = msg;
+  const el = document.getElementById('toast');
   el.classList.add('show');
   clearTimeout(toastT);
-  toastT=setTimeout(()=>el.classList.remove('show'),3200);
+  toastT = setTimeout(() => el.classList.remove('show'), 3200);
 }
 </script>
 </body>
