@@ -3,312 +3,329 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AURA — AI Image Enhancer</title>
+<title>ClearAI — Smart Image Enhancer</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
 
 :root {
-  --bg: #08080f;
-  --surface: #0f0f1a;
-  --surface2: #16162a;
-  --border: rgba(255,255,255,0.07);
-  --border2: rgba(255,255,255,0.12);
-  --text: #e8e8ff;
-  --muted: #6060a0;
-  --accent: #7c6aff;
-  --accent2: #ff6aac;
-  --accent3: #6affda;
-  --glow: rgba(124,106,255,0.15);
+  --bg: #f7f6f2;
+  --white: #ffffff;
+  --ink: #111010;
+  --ink2: #888580;
+  --ink3: #bbb8b2;
+  --accent: #0066ff;
+  --accent-soft: rgba(0,102,255,0.08);
+  --green: #00c853;
+  --border: #e8e5df;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.07);
+  --shadow-md: 0 8px 32px rgba(0,0,0,0.10);
+  --shadow-lg: 0 24px 64px rgba(0,0,0,0.13);
+  --radius: 18px;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Manrope', sans-serif;
   background: var(--bg);
-  color: var(--text);
+  color: var(--ink);
   min-height: 100vh;
-  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Animated background */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 600px 400px at 20% 20%, rgba(124,106,255,0.06) 0%, transparent 70%),
-    radial-gradient(ellipse 400px 400px at 80% 80%, rgba(106,255,218,0.04) 0%, transparent 70%),
-    radial-gradient(ellipse 500px 300px at 60% 10%, rgba(255,106,172,0.03) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* ── HEADER ── */
-header {
-  position: relative;
-  z-index: 10;
+/* ── NAV ── */
+nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 40px;
-  height: 60px;
+  padding: 0 32px;
+  height: 58px;
+  background: var(--white);
   border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(12px);
-  background: rgba(8,8,15,0.8);
+  position: sticky;
+  top: 0;
+  z-index: 50;
 }
 
-.logo {
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: -1px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.logo-sub {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  color: var(--muted);
-  letter-spacing: 2px;
-  font-weight: 300;
-}
-
-.header-right {
+.nav-logo {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.ai-badge {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 12px;
-  background: rgba(124,106,255,0.1);
-  border: 1px solid rgba(124,106,255,0.3);
+.logo-mark {
+  width: 32px; height: 32px;
+  background: var(--ink);
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+}
+
+.logo-text {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+}
+
+.logo-text span { color: var(--accent); }
+
+.nav-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--ink2);
+  letter-spacing: 1px;
+  background: var(--bg);
+  padding: 4px 10px;
   border-radius: 20px;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--accent);
-  letter-spacing: 0.5px;
-}
-
-.ai-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--accent3);
-  box-shadow: 0 0 8px var(--accent3);
-  animation: pulse-dot 2s ease-in-out infinite;
-}
-
-@keyframes pulse-dot {
-  0%,100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.8); }
+  border: 1px solid var(--border);
 }
 
 /* ── MAIN ── */
 main {
-  position: relative;
-  z-index: 1;
-  max-width: 960px;
+  flex: 1;
+  padding: 36px 24px 80px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 40px 24px 80px;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 24px;
 }
 
 /* ── DROP ZONE ── */
-.drop-zone {
-  border: 1.5px dashed rgba(124,106,255,0.3);
-  border-radius: 20px;
-  background: var(--surface);
-  min-height: 280px;
+#drop-shell {
+  background: var(--white);
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  min-height: 320px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 18px;
+  gap: 20px;
   cursor: pointer;
-  transition: all 0.4s ease;
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
 }
 
-.drop-zone::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 50% 50% at 50% 100%, rgba(124,106,255,0.06) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.drop-zone:hover, .drop-zone.over {
+#drop-shell:hover, #drop-shell.over {
   border-color: var(--accent);
-  background: rgba(124,106,255,0.05);
-  box-shadow: 0 0 60px rgba(124,106,255,0.1), inset 0 0 60px rgba(124,106,255,0.03);
+  background: var(--accent-soft);
 }
 
-.drop-zone input { display: none; }
+#drop-shell input { display: none; }
 
-.drop-orbit {
+.drop-visual {
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 90px; height: 90px;
 }
 
-.drop-orbit-ring {
+.drop-ring {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  border: 1.5px solid rgba(124,106,255,0.2);
-  animation: orbit-spin 8s linear infinite;
+  border: 1.5px solid var(--border);
+  animation: slow-spin 10s linear infinite;
 }
 
-.drop-orbit-ring::before {
+.drop-ring::after {
   content: '';
   position: absolute;
-  top: -3px; left: 50%;
+  top: -4px; left: 50%;
   transform: translateX(-50%);
-  width: 6px; height: 6px;
+  width: 8px; height: 8px;
   background: var(--accent);
   border-radius: 50%;
   box-shadow: 0 0 12px var(--accent);
 }
 
-@keyframes orbit-spin { to { transform: rotate(360deg); } }
+@keyframes slow-spin { to { transform: rotate(360deg); } }
 
-.drop-icon-inner {
+.drop-inner {
   position: absolute;
-  inset: 16px;
-  background: var(--surface2);
+  inset: 14px;
+  background: var(--bg);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 26px;
+  font-size: 28px;
+  border: 1px solid var(--border);
 }
 
 .drop-title {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--text);
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--ink);
 }
 
-.drop-sub {
+.drop-desc {
   font-size: 13px;
-  color: var(--muted);
+  color: var(--ink2);
   text-align: center;
   line-height: 1.6;
 }
 
-.drop-cta {
-  padding: 11px 28px;
-  background: linear-gradient(135deg, var(--accent), #5a4aff);
-  color: #fff;
-  border-radius: 10px;
+.drop-btn {
+  padding: 12px 32px;
+  background: var(--ink);
+  color: var(--white);
+  border-radius: 50px;
+  font-family: 'Manrope', sans-serif;
   font-size: 13px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.2px;
+}
+
+.drop-btn:hover { background: var(--accent); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,102,255,0.3); }
+
+/* ── WORKSPACE ── */
+#workspace { display: none; flex-direction: column; gap: 20px; }
+#workspace.visible { display: flex; }
+
+/* ── TOP BAR ── */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.file-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 6px 14px 6px 8px;
+}
+
+.file-pill-icon {
+  width: 26px; height: 26px;
+  background: var(--bg);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+}
+
+.file-pill-name {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--ink);
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.top-bar-actions { display: flex; gap: 8px; }
+
+.btn-sm {
+  padding: 7px 16px;
+  border-radius: 50px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
-  border: none;
-  font-family: 'Outfit', sans-serif;
-  box-shadow: 0 4px 20px rgba(124,106,255,0.3);
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--ink);
 }
 
-.drop-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(124,106,255,0.4); }
+.btn-sm:hover { border-color: var(--ink); }
+.btn-sm:disabled { opacity: 0.35; cursor: not-allowed; }
+.btn-sm.primary { background: var(--ink); color: #fff; border-color: var(--ink); }
+.btn-sm.primary:hover { background: var(--accent); border-color: var(--accent); }
 
-/* ── WORKSPACE ── */
-.workspace {
-  display: none;
-  flex-direction: column;
-  gap: 24px;
-}
-.workspace.visible { display: flex; }
-
-/* ── IMAGE PANELS ── */
-.panels {
+/* ── CANVAS AREA ── */
+.canvas-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
 
-.panel {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
+.img-box {
+  background: var(--white);
+  border-radius: var(--radius);
   overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
   position: relative;
 }
 
-.panel-label {
+.img-box-label {
   position: absolute;
   top: 12px; left: 12px;
   z-index: 5;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 500;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   padding: 5px 12px;
-  border-radius: 20px;
-  background: rgba(8,8,15,0.75);
+  border-radius: 50px;
   backdrop-filter: blur(8px);
-  border: 1px solid var(--border2);
-  color: var(--muted);
 }
 
-.panel-label.ai { color: var(--accent3); border-color: rgba(106,255,218,0.3); background: rgba(106,255,218,0.08); }
+.img-box-label.orig { background: rgba(17,16,16,0.6); color: #fff; }
+.img-box-label.enh  { background: rgba(0,102,255,0.85); color: #fff; }
 
-.panel-img {
-  width: 100%;
-  aspect-ratio: 4/3;
-  background: var(--surface2);
+.img-box-inner {
+  aspect-ratio: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #f0ede8;
   overflow: hidden;
 }
 
-.panel-img canvas {
+.img-box-inner canvas {
   width: 100%;
   height: 100%;
   object-fit: contain;
   display: block;
 }
 
-.panel-placeholder {
+.img-placeholder {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  opacity: 0.3;
+  opacity: 0.25;
+  font-size: 13px;
+  color: var(--ink2);
 }
 
-.panel-placeholder-icon { font-size: 32px; }
-.panel-placeholder-text { font-size: 12px; color: var(--muted); }
+.img-placeholder-icon { font-size: 36px; }
 
 /* ── SLIDER COMPARE ── */
-.sc-wrap {
+#sc-wrap {
   display: none;
   position: relative;
-  border-radius: 16px;
+  background: #111;
+  border-radius: var(--radius);
   overflow: hidden;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  aspect-ratio: 16/9;
+  aspect-ratio: 1;
   cursor: col-resize;
   user-select: none;
+  box-shadow: var(--shadow-md);
 }
 
-.sc-wrap.visible { display: block; }
+#sc-wrap.visible { display: block; }
 
 .sc-layer {
   position: absolute;
   inset: 0;
-  overflow: hidden;
 }
 
 .sc-layer canvas {
@@ -318,354 +335,342 @@ main {
   display: block;
 }
 
-.sc-enhanced { clip-path: inset(0 50% 0 0); }
+.sc-after {
+  clip-path: inset(0 50% 0 0);
+}
 
-.sc-line {
+.sc-divider-line {
   position: absolute;
   top: 0; bottom: 0;
   left: 50%;
   width: 2px;
-  background: rgba(255,255,255,0.9);
+  background: #fff;
   transform: translateX(-50%);
   z-index: 10;
-  box-shadow: 0 0 16px rgba(124,106,255,0.8);
+  box-shadow: 0 0 20px rgba(255,255,255,0.5);
 }
 
-.sc-knob {
+.sc-handle {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 38px;
-  height: 38px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  width: 42px; height: 42px;
+  background: var(--white);
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  box-shadow: 0 4px 20px rgba(124,106,255,0.5);
-  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  border: 2px solid rgba(255,255,255,0.8);
 }
 
-.sc-pill {
+.sc-labels {
   position: absolute;
   bottom: 14px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  font-weight: 500;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 8;
+  pointer-events: none;
+}
+
+.sc-lbl {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  padding: 4px 10px;
-  border-radius: 20px;
-  z-index: 8;
+  padding: 5px 12px;
+  border-radius: 50px;
   backdrop-filter: blur(6px);
 }
 
-.sc-pill.before { left: 14px; background: rgba(8,8,15,0.7); color: var(--muted); border: 1px solid var(--border2); }
-.sc-pill.after  { right: 14px; background: rgba(124,106,255,0.3); color: var(--accent); border: 1px solid rgba(124,106,255,0.4); }
+.sc-lbl.before { background: rgba(0,0,0,0.55); color: #fff; }
+.sc-lbl.after  { background: rgba(0,102,255,0.8); color: #fff; }
 
-/* ── AI ANALYSIS CARD ── */
+/* ── AI CARD ── */
 .ai-card {
-  background: var(--surface);
+  background: var(--white);
+  border-radius: var(--radius);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
   overflow: hidden;
 }
 
-.ai-card-header {
+.ai-card-top {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   padding: 18px 22px;
   border-bottom: 1px solid var(--border);
 }
 
-.ai-card-icon {
-  width: 36px; height: 36px;
-  background: rgba(124,106,255,0.12);
-  border: 1px solid rgba(124,106,255,0.25);
-  border-radius: 10px;
+.ai-icon-box {
+  width: 38px; height: 38px;
+  background: var(--ink);
+  border-radius: 11px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+
+.ai-card-title { font-size: 14px; font-weight: 800; }
+.ai-card-sub   { font-size: 12px; color: var(--ink2); margin-top: 2px; }
+
+.ai-card-body { padding: 20px 22px; }
+
+/* IDLE */
+.ai-idle {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-}
-
-.ai-card-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--text);
-}
-
-.ai-card-sub {
-  font-size: 11px;
-  color: var(--muted);
-  margin-top: 2px;
-}
-
-.ai-card-body {
-  padding: 20px 22px;
-}
-
-/* Analysis state */
-.analysis-idle {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 16px;
-  background: var(--surface2);
-  border-radius: 10px;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-radius: 12px;
   border: 1px solid var(--border);
 }
 
-.analysis-idle-icon { font-size: 24px; }
-.analysis-idle-text { font-size: 13px; color: var(--muted); line-height: 1.5; }
+.ai-idle-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+.ai-idle-text { font-size: 13px; color: var(--ink2); line-height: 1.6; }
+.ai-idle-text strong { color: var(--ink); }
 
-/* Scanning animation */
+/* SCANNING */
 .ai-scanning {
   display: none;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
-.ai-scanning.visible { display: flex; }
+.ai-scanning.on { display: flex; }
 
-.scan-bars {
+.scan-status {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  align-items: center;
+  gap: 10px;
 }
 
-.scan-bar {
-  height: 8px;
-  background: var(--surface2);
-  border-radius: 4px;
-  overflow: hidden;
-  position: relative;
+.scan-spinner {
+  width: 16px; height: 16px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
 }
 
-.scan-bar::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  animation: scan-sweep 1.5s ease-in-out infinite;
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 
-.scan-bar:nth-child(2)::after { animation-delay: 0.2s; }
-.scan-bar:nth-child(3)::after { animation-delay: 0.4s; }
-
-@keyframes scan-sweep {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-.scan-label {
-  font-family: 'JetBrains Mono', monospace;
+.scan-status-text {
+  font-family: 'Space Mono', monospace;
   font-size: 11px;
   color: var(--accent);
-  letter-spacing: 1px;
-  text-align: center;
-  animation: blink 1s ease-in-out infinite;
+  letter-spacing: 0.5px;
 }
 
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.scan-track {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
 
-/* Result display */
+.scan-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #00aaff);
+  border-radius: 2px;
+  width: 0%;
+  transition: width 0.5s ease;
+}
+
+/* RESULT */
 .ai-result {
   display: none;
   flex-direction: column;
   gap: 14px;
 }
 
-.ai-result.visible { display: flex; }
+.ai-result.on { display: flex; }
 
-.result-diagnosis {
+.ai-diagnosis-box {
   padding: 14px 16px;
-  background: rgba(124,106,255,0.07);
-  border: 1px solid rgba(124,106,255,0.2);
-  border-radius: 10px;
+  background: rgba(0,102,255,0.05);
+  border: 1px solid rgba(0,102,255,0.15);
+  border-radius: 12px;
   font-size: 13px;
-  color: var(--text);
-  line-height: 1.6;
+  color: var(--ink);
+  line-height: 1.65;
   position: relative;
 }
 
-.result-diagnosis::before {
-  content: '🤖 AI';
+.ai-diagnosis-box::before {
+  content: 'CLAUDE AI';
   position: absolute;
-  top: -10px;
-  left: 14px;
-  background: var(--surface);
-  padding: 0 8px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
+  top: -9px; left: 14px;
+  background: var(--white);
+  padding: 0 6px;
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
   color: var(--accent);
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
 }
 
-.params-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+.params-row {
+  display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
-.param-chip {
-  background: var(--surface2);
+.param-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--bg);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 10px 12px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.param-tag-name { color: var(--ink2); }
+.param-tag-val  { color: var(--ink); font-family: 'Space Mono', monospace; font-size: 11px; }
+.param-tag-val.pos { color: var(--accent); }
+.param-tag-val.neg { color: #ff4444; }
+
+/* ── PROGRESS ── */
+.process-steps {
+  display: none;
+  align-items: center;
+  gap: 0;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.process-steps.on { display: flex; }
+
+.ps-item {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  gap: 5px;
+  padding: 12px 8px;
+  border-right: 1px solid var(--border);
+  opacity: 0.3;
+  transition: all 0.3s;
+  position: relative;
 }
 
-.param-name {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  color: var(--muted);
-  letter-spacing: 1px;
-  text-transform: uppercase;
+.ps-item:last-child { border-right: none; }
+.ps-item.active { opacity: 1; background: rgba(0,102,255,0.04); }
+.ps-item.done   { opacity: 0.65; }
+
+.ps-item-icon { font-size: 16px; }
+
+.ps-item-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.5px;
+  color: var(--ink2);
+  text-align: center;
 }
 
-.param-value {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--accent3);
+.ps-item.active .ps-item-label { color: var(--accent); }
+.ps-item.done   .ps-item-label { color: var(--green); }
+
+.ps-bar-wrap {
+  display: none;
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
 }
 
-/* ── ENHANCE BUTTON ── */
-.enhance-btn-wrap {
+.ps-bar-wrap.on { display: block; }
+.ps-bar { height: 100%; background: var(--accent); width: 0%; transition: width 0.4s ease; border-radius: 2px; }
+
+/* ── ENHANCE BTN ── */
+.enhance-wrap {
   display: flex;
-  gap: 12px;
-  align-items: stretch;
+  gap: 10px;
 }
 
-.btn-main {
+.btn-enhance {
   flex: 1;
-  padding: 18px;
-  background: linear-gradient(135deg, var(--accent) 0%, #5a4aff 50%, var(--accent2) 100%);
-  background-size: 200% 200%;
+  padding: 16px;
+  background: var(--ink);
+  color: var(--white);
   border: none;
   border-radius: 14px;
-  color: #fff;
-  font-family: 'Outfit', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
   cursor: pointer;
-  letter-spacing: 0.3px;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 4px 24px rgba(124,106,255,0.3);
+  letter-spacing: -0.2px;
+  transition: all 0.25s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  position: relative;
+  overflow: hidden;
 }
 
-.btn-main:hover {
-  background-position: right center;
+.btn-enhance::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent, rgba(255,255,255,0.05));
+}
+
+.btn-enhance:hover:not(:disabled) {
+  background: var(--accent);
   transform: translateY(-2px);
-  box-shadow: 0 10px 40px rgba(124,106,255,0.45);
+  box-shadow: 0 10px 30px rgba(0,102,255,0.35);
 }
 
-.btn-main:disabled {
-  background: var(--surface2);
-  color: var(--muted);
+.btn-enhance:active:not(:disabled) { transform: translateY(0); }
+
+.btn-enhance:disabled {
+  background: var(--border);
+  color: var(--ink3);
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
 }
 
-.btn-main .btn-spinner {
-  width: 20px; height: 20px;
+.btn-enhance .spinner {
+  width: 18px; height: 18px;
   border: 2px solid rgba(255,255,255,0.3);
   border-top-color: #fff;
   border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+  animation: spin 0.7s linear infinite;
   display: none;
 }
 
-.btn-main.loading .btn-spinner { display: block; }
-.btn-main.loading .btn-text { opacity: 0.6; }
+.btn-enhance.loading .spinner { display: block; }
+.btn-enhance.loading .btn-lbl { opacity: 0.7; }
 
-@keyframes spin { to { transform: rotate(360deg); } }
-
-.btn-sec {
-  padding: 18px 22px;
-  background: var(--surface);
-  border: 1px solid var(--border2);
+.btn-action {
+  padding: 16px 20px;
+  background: var(--white);
+  border: 1px solid var(--border);
   border-radius: 14px;
-  color: var(--text);
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Manrope', sans-serif;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
+  color: var(--ink);
   cursor: pointer;
   transition: all 0.2s;
   white-space: nowrap;
 }
 
-.btn-sec:hover { background: var(--surface2); border-color: var(--accent); color: var(--accent); }
-.btn-sec:disabled { opacity: 0.3; cursor: not-allowed; }
-
-/* ── PROCESSING STEPS ── */
-.steps-strip {
-  display: none;
-  gap: 0;
-  background: var(--surface2);
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-}
-
-.steps-strip.visible { display: flex; }
-
-.step-item {
-  flex: 1;
-  padding: 10px 8px;
-  text-align: center;
-  border-right: 1px solid var(--border);
-  transition: all 0.3s;
-  opacity: 0.35;
-}
-
-.step-item:last-child { border-right: none; }
-.step-item.active { opacity: 1; background: rgba(124,106,255,0.08); }
-.step-item.done { opacity: 0.7; }
-
-.step-item-icon { font-size: 14px; }
-.step-item-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  color: var(--muted);
-  letter-spacing: 0.5px;
-  margin-top: 4px;
-}
-
-.step-item.active .step-item-label { color: var(--accent); }
-.step-item.done .step-item-label { color: var(--accent3); }
-
-/* Progress bar */
-.progress-bar-outer {
-  height: 3px;
-  background: var(--surface2);
-  border-radius: 2px;
-  overflow: hidden;
-  display: none;
-}
-
-.progress-bar-outer.visible { display: block; }
-
-.progress-bar-inner {
-  height: 100%;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
-  border-radius: 2px;
-  width: 0%;
-  transition: width 0.4s ease;
-  box-shadow: 0 0 10px var(--accent);
-}
+.btn-action:hover:not(:disabled) { border-color: var(--ink); background: var(--bg); }
+.btn-action:disabled { opacity: 0.3; cursor: not-allowed; }
 
 /* ── TOAST ── */
 .toast {
@@ -673,777 +678,697 @@ main {
   bottom: 28px;
   left: 50%;
   transform: translateX(-50%) translateY(60px);
-  background: var(--surface2);
-  border: 1px solid var(--border2);
-  color: var(--text);
-  padding: 12px 22px;
-  border-radius: 30px;
+  background: var(--ink);
+  color: var(--white);
+  padding: 11px 22px;
+  border-radius: 50px;
   font-size: 13px;
-  font-weight: 500;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-  z-index: 100;
+  font-weight: 600;
+  box-shadow: var(--shadow-lg);
+  z-index: 200;
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   display: flex;
   align-items: center;
   gap: 8px;
-  backdrop-filter: blur(12px);
+  white-space: nowrap;
 }
 
 .toast.show { transform: translateX(-50%) translateY(0); }
 
-/* Change image row */
-.file-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.file-name-badge {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  color: var(--text);
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  padding: 5px 12px;
-  border-radius: 20px;
-  max-width: 220px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.file-row-label { font-size: 12px; color: var(--muted); }
-
-@media (max-width: 640px) {
-  .panels { grid-template-columns: 1fr; }
-  .params-grid { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 600px) {
+  .canvas-row { grid-template-columns: 1fr; }
+  .params-row .param-tag { font-size: 11px; }
 }
 </style>
 </head>
 <body>
 
-<header>
-  <div>
-    <div class="logo">AURA</div>
-    <div class="logo-sub">AI IMAGE ENHANCER</div>
+<nav>
+  <div class="nav-logo">
+    <div class="logo-mark">✦</div>
+    <div class="logo-text">Clear<span>AI</span></div>
   </div>
-  <div class="header-right">
-    <div class="ai-badge">
-      <div class="ai-dot"></div>
-      Powered by Claude Vision
-    </div>
-  </div>
-</header>
+  <div class="nav-tag">SMART ENHANCER</div>
+</nav>
 
 <main>
 
-  <!-- DROP ZONE -->
-  <label class="drop-zone" id="drop-zone">
-    <div class="drop-orbit">
-      <div class="drop-orbit-ring"></div>
-      <div class="drop-icon-inner">🖼️</div>
+  <!-- DROP -->
+  <label id="drop-shell">
+    <div class="drop-visual">
+      <div class="drop-ring"></div>
+      <div class="drop-inner">🖼️</div>
     </div>
-    <div class="drop-title">Drop your image</div>
-    <div class="drop-sub">Claude AI will analyze and enhance it automatically<br>PNG · JPG · WEBP · All processing is private</div>
-    <button class="drop-cta" onclick="event.preventDefault(); document.getElementById('file-input').click()">Choose Image</button>
-    <input type="file" id="file-input" accept="image/*">
+    <div class="drop-title">Drop your photo here</div>
+    <div class="drop-desc">Claude AI analyzes noise, blur & lighting — then enhances automatically<br>PNG · JPG · WEBP · All processing stays in your browser</div>
+    <button class="drop-btn" onclick="event.preventDefault();document.getElementById('fi').click()">Choose Photo</button>
+    <input type="file" id="fi" accept="image/*">
   </label>
 
   <!-- WORKSPACE -->
-  <div class="workspace" id="workspace">
+  <div id="workspace">
 
-    <!-- FILE ROW -->
-    <div class="file-row">
-      <span class="file-row-label">File:</span>
-      <span class="file-name-badge" id="file-name-badge">—</span>
-      <label class="btn-sec" style="cursor:pointer; padding:6px 14px; font-size:12px; border-radius:20px;">
-        Change
-        <input type="file" id="file-input-2" accept="image/*" style="display:none">
-      </label>
+    <!-- TOP BAR -->
+    <div class="top-bar">
+      <div class="file-pill">
+        <div class="file-pill-icon">📷</div>
+        <div class="file-pill-name" id="fname">—</div>
+      </div>
+      <div class="top-bar-actions">
+        <label class="btn-sm" style="cursor:pointer">
+          New Photo <input type="file" id="fi2" accept="image/*" style="display:none">
+        </label>
+        <button class="btn-sm" id="btn-compare" disabled>Before / After</button>
+        <button class="btn-sm primary" id="btn-dl" disabled>⬇ Download</button>
+      </div>
     </div>
 
-    <!-- IMAGE PANELS -->
-    <div class="panels" id="panels">
-      <div class="panel">
-        <div class="panel-label">Original</div>
-        <div class="panel-img">
-          <canvas id="orig-canvas"></canvas>
+    <!-- IMAGES -->
+    <div class="canvas-row" id="canvas-row">
+      <div class="img-box">
+        <div class="img-box-label orig">Original</div>
+        <div class="img-box-inner">
+          <canvas id="orig-c"></canvas>
         </div>
       </div>
-      <div class="panel">
-        <div class="panel-label ai">✦ AI Enhanced</div>
-        <div class="panel-img" id="enh-panel-img">
-          <div class="panel-placeholder" id="enh-placeholder">
-            <div class="panel-placeholder-icon">✨</div>
-            <div class="panel-placeholder-text">Enhanced preview will appear here</div>
+      <div class="img-box">
+        <div class="img-box-label enh">✦ AI Enhanced</div>
+        <div class="img-box-inner" id="enh-wrap">
+          <div class="img-placeholder" id="enh-ph">
+            <div class="img-placeholder-icon">✨</div>
+            <div>Tap Enhance Now</div>
           </div>
-          <canvas id="enh-canvas" style="display:none"></canvas>
+          <canvas id="enh-c" style="display:none"></canvas>
         </div>
       </div>
     </div>
 
     <!-- SLIDER COMPARE -->
-    <div class="sc-wrap" id="sc-wrap">
+    <div id="sc-wrap">
       <div class="sc-layer">
         <canvas id="sc-orig"></canvas>
       </div>
-      <div class="sc-layer sc-enhanced" id="sc-enh-layer">
+      <div class="sc-layer sc-after" id="sc-after-layer">
         <canvas id="sc-enh"></canvas>
       </div>
-      <div class="sc-line" id="sc-line">
-        <div class="sc-knob">⇔</div>
+      <div class="sc-divider-line" id="sc-divider">
+        <div class="sc-handle">⇔</div>
       </div>
-      <div class="sc-pill before">BEFORE</div>
-      <div class="sc-pill after">AFTER ✦</div>
+      <div class="sc-labels">
+        <div class="sc-lbl before">Before</div>
+        <div class="sc-lbl after">After ✦</div>
+      </div>
     </div>
 
-    <!-- AI ANALYSIS CARD -->
+    <!-- PROCESS STEPS -->
+    <div class="process-steps" id="proc-steps"></div>
+    <div class="ps-bar-wrap" id="ps-bar-wrap"><div class="ps-bar" id="ps-bar"></div></div>
+
+    <!-- AI CARD -->
     <div class="ai-card">
-      <div class="ai-card-header">
-        <div class="ai-card-icon">🧠</div>
+      <div class="ai-card-top">
+        <div class="ai-icon-box">🧠</div>
         <div>
           <div class="ai-card-title">Claude Vision Analysis</div>
-          <div class="ai-card-sub">AI reads your image and prescribes custom enhancement parameters</div>
+          <div class="ai-card-sub">AI reads your image to detect noise, blur & lighting — then crafts a precise enhancement recipe</div>
         </div>
       </div>
       <div class="ai-card-body">
-
         <!-- Idle -->
-        <div class="analysis-idle" id="analysis-idle">
-          <div class="analysis-idle-icon">🔍</div>
-          <div class="analysis-idle-text">Upload an image and click <strong>AI Enhance</strong> — Claude will analyze the photo and generate a personalized enhancement recipe just for it.</div>
+        <div class="ai-idle" id="ai-idle">
+          <div class="ai-idle-icon">🔍</div>
+          <div class="ai-idle-text">Upload a photo and hit <strong>Enhance Now</strong>. Claude will analyze the actual noise, blur, and lighting in your image — then apply targeted smoothing and sharpening without touching colors.</div>
         </div>
-
         <!-- Scanning -->
-        <div class="ai-scanning" id="ai-scanning">
-          <div class="scan-bars">
-            <div class="scan-bar"></div>
-            <div class="scan-bar"></div>
-            <div class="scan-bar"></div>
+        <div class="ai-scanning" id="ai-scan">
+          <div class="scan-status">
+            <div class="scan-spinner"></div>
+            <div class="scan-status-text" id="scan-txt">Sending to Claude Vision...</div>
           </div>
-          <div class="scan-label" id="scan-label">ANALYZING IMAGE WITH CLAUDE VISION...</div>
+          <div class="scan-track"><div class="scan-fill" id="scan-fill"></div></div>
         </div>
-
         <!-- Result -->
-        <div class="ai-result" id="ai-result">
-          <div class="result-diagnosis" id="ai-diagnosis">—</div>
-          <div class="params-grid" id="params-grid"></div>
+        <div class="ai-result" id="ai-res">
+          <div class="ai-diagnosis-box" id="ai-diag">—</div>
+          <div class="params-row" id="params-row"></div>
         </div>
-
       </div>
     </div>
 
-    <!-- PROGRESS STRIP -->
-    <div class="steps-strip" id="steps-strip"></div>
-    <div class="progress-bar-outer" id="progress-bar-outer">
-      <div class="progress-bar-inner" id="progress-bar-inner"></div>
-    </div>
-
-    <!-- ACTIONS -->
-    <div class="enhance-btn-wrap">
-      <button class="btn-main" id="btn-enhance">
-        <div class="btn-spinner"></div>
-        <span class="btn-text">✦ AI Enhance</span>
+    <!-- ENHANCE BTN -->
+    <div class="enhance-wrap">
+      <button class="btn-enhance" id="btn-enh">
+        <div class="spinner"></div>
+        <span class="btn-lbl">✦ Enhance Now</span>
       </button>
-      <button class="btn-sec" id="btn-compare" disabled>Compare</button>
-      <button class="btn-sec" id="btn-download" disabled>Download</button>
     </div>
 
   </div>
 </main>
 
-<!-- TOAST -->
-<div class="toast" id="toast">
-  <span id="toast-icon">✅</span>
-  <span id="toast-msg">Done!</span>
-</div>
+<div class="toast" id="toast"><span id="ti">✅</span><span id="tm">Done</span></div>
 
-<!-- Hidden canvases -->
-<canvas id="src-canvas" style="display:none"></canvas>
-<canvas id="work-canvas" style="display:none"></canvas>
+<!-- Working canvases -->
+<canvas id="src-c" style="display:none"></canvas>
+<canvas id="work-c" style="display:none"></canvas>
 
 <script>
 // ─── STATE ────────────────────────────────────────────────────────────────────
-let sourceImg = null;
-let enhancedCanvas = null;
-let sliderOpen = false;
-let sliderDragging = false;
-let sliderPos = 0.5;
-let lastParams = null;
-let currentFileName = '';
+let srcImg = null, workCanvas = null, enhDone = false;
+let sliderOpen = false, sliderDrag = false, sliderX = 0.5;
+let fname = '';
 
 // ─── ELEMENTS ─────────────────────────────────────────────────────────────────
-const dropZone    = document.getElementById('drop-zone');
-const workspace   = document.getElementById('workspace');
-const fileInput   = document.getElementById('file-input');
-const fileInput2  = document.getElementById('file-input-2');
-const srcCanvas   = document.getElementById('src-canvas');
-const workCanvas  = document.getElementById('work-canvas');
-const origCanvas  = document.getElementById('orig-canvas');
-const enhCanvas   = document.getElementById('enh-canvas');
-const scOrig      = document.getElementById('sc-orig');
-const scEnh       = document.getElementById('sc-enh');
-const scWrap      = document.getElementById('sc-wrap');
-const scEnhLayer  = document.getElementById('sc-enh-layer');
-const scLine      = document.getElementById('sc-line');
-const btnEnhance  = document.getElementById('btn-enhance');
-const btnCompare  = document.getElementById('btn-compare');
-const btnDownload = document.getElementById('btn-download');
+const dropShell  = document.getElementById('drop-shell');
+const workspace  = document.getElementById('workspace');
+const srcC       = document.getElementById('src-c');
+const workC      = document.getElementById('work-c');
+const origC      = document.getElementById('orig-c');
+const enhC       = document.getElementById('enh-c');
+const scOrig     = document.getElementById('sc-orig');
+const scEnh      = document.getElementById('sc-enh');
+const scWrap     = document.getElementById('sc-wrap');
+const scAfter    = document.getElementById('sc-after-layer');
+const scDivider  = document.getElementById('sc-divider');
+const btnEnh     = document.getElementById('btn-enh');
+const btnCmp     = document.getElementById('btn-compare');
+const btnDl      = document.getElementById('btn-dl');
 
-const srcCtx  = srcCanvas.getContext('2d');
-const workCtx = workCanvas.getContext('2d');
-const origCtx = origCanvas.getContext('2d');
-const enhCtx  = enhCanvas.getContext('2d');
-const scOrigCtx = scOrig.getContext('2d');
-const scEnhCtx  = scEnh.getContext('2d');
+const srcCtx   = srcC.getContext('2d');
+const workCtx  = workC.getContext('2d');
+const origCtx  = origC.getContext('2d');
+const enhCtx   = enhC.getContext('2d');
+const scOrigCtx= scOrig.getContext('2d');
+const scEnhCtx = scEnh.getContext('2d');
 
-// ─── FILE LOADING ─────────────────────────────────────────────────────────────
-dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('over'); });
-dropZone.addEventListener('dragleave', () => dropZone.classList.remove('over'));
-dropZone.addEventListener('drop', e => {
-  e.preventDefault();
-  dropZone.classList.remove('over');
-  const f = e.dataTransfer.files[0];
-  if (f && f.type.startsWith('image/')) loadFile(f);
+// ─── FILE LOAD ────────────────────────────────────────────────────────────────
+const fi = document.getElementById('fi');
+const fi2= document.getElementById('fi2');
+
+['dragover','dragleave','drop'].forEach(ev => {
+  dropShell.addEventListener(ev, e => {
+    e.preventDefault();
+    if (ev==='dragover') dropShell.classList.add('over');
+    else dropShell.classList.remove('over');
+    if (ev==='drop' && e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+  });
 });
-fileInput.addEventListener('change', () => { if (fileInput.files[0]) loadFile(fileInput.files[0]); });
-fileInput2.addEventListener('change', () => { if (fileInput2.files[0]) loadFile(fileInput2.files[0]); });
+
+fi.addEventListener('change',  () => fi.files[0]  && loadFile(fi.files[0]));
+fi2.addEventListener('change', () => fi2.files[0] && loadFile(fi2.files[0]));
 
 function loadFile(file) {
-  currentFileName = file.name;
-  document.getElementById('file-name-badge').textContent = file.name;
+  fname = file.name;
+  document.getElementById('fname').textContent = file.name;
   const url = URL.createObjectURL(file);
   const img = new Image();
   img.onload = () => {
-    sourceImg = img;
-    srcCanvas.width = img.naturalWidth;
-    srcCanvas.height = img.naturalHeight;
+    srcImg = img;
+    srcC.width = img.naturalWidth;
+    srcC.height= img.naturalHeight;
     srcCtx.drawImage(img, 0, 0);
 
-    sizeCanvas(origCanvas, img.naturalWidth, img.naturalHeight);
-    origCtx.drawImage(img, 0, 0, origCanvas.width, origCanvas.height);
+    fitCanvas(origC, img.naturalWidth, img.naturalHeight);
+    origCtx.drawImage(img, 0, 0, origC.width, origC.height);
 
-    // Reset enhanced panel
-    enhCanvas.style.display = 'none';
-    document.getElementById('enh-placeholder').style.display = 'flex';
-    enhancedCanvas = null;
-    btnCompare.disabled = true;
-    btnDownload.disabled = true;
+    // Reset enhanced
+    enhC.style.display = 'none';
+    document.getElementById('enh-ph').style.display = 'flex';
+    enhDone = false;
+    btnCmp.disabled = true;
+    btnDl.disabled  = true;
     sliderOpen = false;
     scWrap.classList.remove('visible');
-    document.getElementById('panels').style.display = '';
-
-    resetAnalysis();
-    dropZone.style.display = 'none';
-    workspace.classList.add('visible');
+    document.getElementById('canvas-row').style.display = '';
+    resetAI();
     URL.revokeObjectURL(url);
-    toast('🖼️', 'Image loaded — click AI Enhance!');
+    dropShell.style.display = 'none';
+    workspace.classList.add('visible');
+    toast('📷', 'Photo loaded — tap Enhance Now');
   };
   img.src = url;
 }
 
-function sizeCanvas(c, w, h) {
-  const MAX = 800;
+function fitCanvas(c, w, h) {
+  const MAX = 900;
   const s = Math.min(1, MAX / Math.max(w, h));
-  c.width = Math.round(w * s);
+  c.width  = Math.round(w * s);
   c.height = Math.round(h * s);
 }
 
-// ─── ENHANCE BUTTON ───────────────────────────────────────────────────────────
-btnEnhance.addEventListener('click', async () => {
-  if (!sourceImg) return;
-  btnEnhance.classList.add('loading');
-  btnEnhance.disabled = true;
-  btnCompare.disabled = true;
-  btnDownload.disabled = true;
+// ─── ENHANCE ──────────────────────────────────────────────────────────────────
+btnEnh.addEventListener('click', async () => {
+  if (!srcImg) return;
+  btnEnh.classList.add('loading');
+  btnEnh.disabled = true;
+  btnCmp.disabled = true;
+  btnDl.disabled  = true;
   sliderOpen = false;
   scWrap.classList.remove('visible');
-  document.getElementById('panels').style.display = '';
+  document.getElementById('canvas-row').style.display = '';
 
+  let params;
   try {
-    // Step 1: AI Analysis
-    showScanning('SENDING IMAGE TO CLAUDE VISION...');
-    const params = await analyzeWithClaude();
-    lastParams = params;
+    showScan('Sending image to Claude Vision...');
+    await animateScan();
+    params = await callClaude();
     showResult(params);
-
-    // Step 2: Apply enhancements
-    await applyEnhancements(params);
-
-    // Done
-    btnCompare.disabled = false;
-    btnDownload.disabled = false;
-    toast('✨', 'AI Enhancement complete!');
-  } catch (err) {
-    console.error(err);
-    resetAnalysis();
-    // Fallback to smart defaults
-    toast('⚡', 'Using smart defaults (API unavailable)');
-    const fallback = getSmartFallback();
-    lastParams = fallback;
-    showResult(fallback);
-    await applyEnhancements(fallback);
-    btnCompare.disabled = false;
-    btnDownload.disabled = false;
+  } catch(e) {
+    console.warn('Claude API error, using auto:', e);
+    params = autoParams();
+    showResult(params);
+    toast('⚡', 'Smart auto-enhancement applied');
   }
 
-  btnEnhance.classList.remove('loading');
-  btnEnhance.disabled = false;
+  await applyPipeline(params);
+
+  btnEnh.classList.remove('loading');
+  btnEnh.disabled = false;
+  btnCmp.disabled = false;
+  btnDl.disabled  = false;
+  enhDone = true;
+  toast('✦', 'Enhancement complete!');
 });
 
 // ─── CLAUDE VISION API ────────────────────────────────────────────────────────
-async function analyzeWithClaude() {
-  // Get base64 of image (resize to max 1024 for API)
-  const apiCanvas = document.createElement('canvas');
-  const MAX = 1024;
-  const scale = Math.min(1, MAX / Math.max(srcCanvas.width, srcCanvas.height));
-  apiCanvas.width  = Math.round(srcCanvas.width  * scale);
-  apiCanvas.height = Math.round(srcCanvas.height * scale);
-  apiCanvas.getContext('2d').drawImage(srcCanvas, 0, 0, apiCanvas.width, apiCanvas.height);
-  const base64 = apiCanvas.toDataURL('image/jpeg', 0.85).split(',')[1];
+async function callClaude() {
+  // Resize to max 1024 for API
+  const ac = document.createElement('canvas');
+  const s  = Math.min(1, 1024 / Math.max(srcC.width, srcC.height));
+  ac.width  = Math.round(srcC.width  * s);
+  ac.height = Math.round(srcC.height * s);
+  ac.getContext('2d').drawImage(srcC, 0, 0, ac.width, ac.height);
+  const b64 = ac.toDataURL('image/jpeg', 0.88).split(',')[1];
 
-  const prompt = `You are an expert photo editor AI. Analyze this image and return ONLY a valid JSON object (no markdown, no explanation) with these exact fields:
+  const prompt = `You are an expert image restoration AI. Your job is ONLY to remove noise/blur and smooth the image — do NOT alter colors, saturation, contrast, or brightness significantly.
+
+Analyze this image carefully. Return ONLY a valid JSON object with these exact fields (no markdown, no explanation):
 
 {
-  "diagnosis": "2-3 sentence description of what you see and what issues need fixing (lighting, color, noise, sharpness etc.)",
-  "imageType": "portrait|landscape|indoor|macro|night|food|document|other",
-  "brightness": <integer -100 to 100>,
-  "contrast": <integer -100 to 100>,
-  "highlights": <integer -100 to 100>,
-  "shadows": <integer -100 to 100>,
-  "whites": <integer -100 to 100>,
-  "blacks": <integer -100 to 100>,
-  "saturation": <integer -100 to 100>,
-  "vibrance": <integer -100 to 100>,
-  "sharpness": <integer 0 to 100>,
-  "smoothing": <integer 0 to 100>,
-  "clarity": <integer -100 to 100>,
-  "colorTemp": <integer -100 to 100, negative=cool, positive=warm>,
-  "noiseReduction": <integer 0 to 100>,
-  "vignette": <integer -100 to 0>
+  "diagnosis": "2-3 sentences describing: what type of photo this is, what noise/blur/artifacts you see, what specific restoration is needed",
+  "noiseLevel": <0-100, how much noise/grain is visible>,
+  "blurLevel": <0-100, how much softness/blur needs correction>,
+  "smoothingPasses": <1-4, how many bilateral filter passes needed>,
+  "smoothingRadius": <1-5, spatial radius for bilateral filter>,
+  "smoothingSigma": <5-80, color sigma for bilateral filter — higher = more aggressive smoothing>,
+  "sharpAmount": <0.0-1.5, unsharp mask strength — keep low 0.3-0.8 for natural look>,
+  "sharpRadius": <0.5-2.5, blur radius for unsharp mask>,
+  "sharpThreshold": <0-15, edge threshold for unsharp mask>,
+  "edgeProtection": <0-100, how strongly to protect edges during smoothing>,
+  "microDetailBoost": <0.0-1.0, subtle high-frequency detail recovery>,
+  "skinSmoothStrength": <0-100, if portrait: skin smoothing level>,
+  "finalSharpPass": <true|false, whether to do a final light sharpen pass>
 }
 
-Be specific and accurate. Analyze the actual lighting, color balance, sharpness, and noise in the image. Return ONLY the JSON.`;
+Focus ONLY on: noise removal, blur correction, surface smoothing, detail recovery. Do NOT suggest color/contrast/brightness changes. Return ONLY the JSON.`;
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
+  const resp = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       model: 'claude-sonnet-4-20250514',
-      max_tokens: 1000,
+      max_tokens: 800,
       messages: [{
         role: 'user',
         content: [
-          { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: base64 } },
+          { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: b64 } },
           { type: 'text', text: prompt }
         ]
       }]
     })
   });
 
-  if (!response.ok) throw new Error('API error: ' + response.status);
-  const data = await response.json();
-  const text = data.content.find(b => b.type === 'text')?.text || '{}';
-  // Strip any markdown fences if present
-  const clean = text.replace(/```json|```/g, '').trim();
-  return JSON.parse(clean);
+  if (!resp.ok) throw new Error('API ' + resp.status);
+  const data = await resp.json();
+  const txt  = data.content.find(b => b.type === 'text')?.text || '{}';
+  return JSON.parse(txt.replace(/```json|```/g, '').trim());
 }
 
-function getSmartFallback() {
-  // Compute basic stats from image
-  const d = srcCtx.getImageData(0, 0, srcCanvas.width, srcCanvas.height).data;
-  let rSum=0, gSum=0, bSum=0, count=0;
-  for (let i = 0; i < d.length; i+=4) { rSum+=d[i]; gSum+=d[i+1]; bSum+=d[i+2]; count++; }
-  const avgR=rSum/count, avgG=gSum/count, avgB=bSum/count;
-  const avgL = (avgR+avgG+avgB)/3;
-  const isDark = avgL < 100;
-  const isWarm = avgR > avgB + 15;
+function autoParams() {
   return {
-    diagnosis: "Applied smart auto-enhancement based on image statistics. Balanced exposure, improved color vibrancy, and sharpened details.",
-    imageType: "auto",
-    brightness: isDark ? 20 : 5,
-    contrast: 15,
-    highlights: -15,
-    shadows: isDark ? 30 : 10,
-    whites: 5,
-    blacks: -5,
-    saturation: 10,
-    vibrance: 20,
-    sharpness: 40,
-    smoothing: 15,
-    clarity: 20,
-    colorTemp: isWarm ? -10 : 5,
-    noiseReduction: isDark ? 40 : 15,
-    vignette: -10
+    diagnosis: "Applied smart automatic enhancement. Detected moderate noise — applied bilateral smoothing passes with edge protection, followed by precision unsharp masking to recover fine details.",
+    noiseLevel: 45, blurLevel: 20,
+    smoothingPasses: 2, smoothingRadius: 2, smoothingSigma: 25,
+    sharpAmount: 0.55, sharpRadius: 1.2, sharpThreshold: 4,
+    edgeProtection: 70, microDetailBoost: 0.4,
+    skinSmoothStrength: 30, finalSharpPass: true
   };
 }
 
-// ─── APPLY ENHANCEMENTS ───────────────────────────────────────────────────────
-async function applyEnhancements(p) {
+// ─── PIXEL PIPELINE ───────────────────────────────────────────────────────────
+async function applyPipeline(p) {
   const steps = buildSteps(p);
   showSteps(steps);
 
-  workCanvas.width  = srcCanvas.width;
-  workCanvas.height = srcCanvas.height;
-  workCtx.drawImage(srcCanvas, 0, 0);
+  // Full resolution work canvas
+  workC.width  = srcC.width;
+  workC.height = srcC.height;
+  workCtx.drawImage(srcC, 0, 0);
 
   for (let i = 0; i < steps.length; i++) {
-    activateStep(i, steps.length);
-    setProgress((i / steps.length) * 90);
-    await sleep(40);
+    activateStep(i);
+    setBar((i / steps.length) * 88);
+    await delay(30);
     await steps[i].fn();
     doneStep(i);
   }
 
-  setProgress(100);
-  await sleep(100);
+  setBar(100);
+  await delay(120);
 
-  // Copy to display
-  sizeCanvas(enhCanvas, workCanvas.width, workCanvas.height);
-  enhCtx.drawImage(workCanvas, 0, 0, enhCanvas.width, enhCanvas.height);
-  enhCanvas.style.display = 'block';
-  document.getElementById('enh-placeholder').style.display = 'none';
+  // Display result
+  fitCanvas(enhC, workC.width, workC.height);
+  enhCtx.drawImage(workC, 0, 0, enhC.width, enhC.height);
+  enhC.style.display = 'block';
+  document.getElementById('enh-ph').style.display = 'none';
 
   // Slider canvases
-  sizeCanvas(scOrig, srcCanvas.width, srcCanvas.height);
-  scOrigCtx.drawImage(srcCanvas, 0, 0, scOrig.width, scOrig.height);
-  sizeCanvas(scEnh, workCanvas.width, workCanvas.height);
-  scEnhCtx.drawImage(workCanvas, 0, 0, scEnh.width, scEnh.height);
+  fitCanvas(scOrig, srcC.width, srcC.height);
+  scOrigCtx.drawImage(srcC, 0, 0, scOrig.width, scOrig.height);
+  fitCanvas(scEnh, workC.width, workC.height);
+  scEnhCtx.drawImage(workC, 0, 0, scEnh.width, scEnh.height);
 
-  enhancedCanvas = workCanvas;
-  setTimeout(hideSteps, 800);
+  workCanvas = workC;
+  setTimeout(hideSteps, 600);
 }
 
 function buildSteps(p) {
   const steps = [];
-  const t = 1;
+  const passes = Math.max(1, Math.min(4, p.smoothingPasses || 2));
+  const radius = Math.max(1, Math.min(5, p.smoothingRadius || 2));
+  const sigma  = Math.max(5, Math.min(80, p.smoothingSigma || 25));
+  const edgeProt = (p.edgeProtection || 70) / 100;
 
-  if (p.brightness !== 0 || p.contrast !== 0 || p.highlights !== 0 || p.shadows !== 0 || p.whites !== 0 || p.blacks !== 0) {
-    steps.push({ icon: '⚖️', label: 'Levels', fn: () => applyTonals(p) });
-  }
-  if (p.noiseReduction > 0 || p.smoothing > 0) {
-    const strength = Math.max(p.noiseReduction, p.smoothing) / 100;
-    const radius = Math.round(1 + strength * 3);
-    const sigma = 10 + strength * 50;
-    steps.push({ icon: '🌫️', label: 'Denoise', fn: () => bilateralSmooth(radius, sigma) });
-    if (p.smoothing > 30) {
-      steps.push({ icon: '🫧', label: 'Smooth', fn: () => bilateralSmooth(Math.max(1, Math.round(p.smoothing/50)), p.smoothing * 0.4) });
-    }
-  }
-  if (p.saturation !== 0 || p.vibrance !== 0) {
-    steps.push({ icon: '🎨', label: 'Color', fn: () => applyColor(p) });
-  }
-  if (p.colorTemp !== 0) {
-    steps.push({ icon: '🌡️', label: 'Temp', fn: () => applyColorTemp(p.colorTemp) });
-  }
-  if (p.sharpness > 0) {
-    steps.push({ icon: '🔬', label: 'Sharpen', fn: () => unsharpMask(p.sharpness / 80, p.sharpness * 0.5) });
-  }
-  if (p.clarity !== 0) {
-    steps.push({ icon: '✦', label: 'Clarity', fn: () => clarityBoost(p.clarity / 100) });
-  }
-  if (p.vignette < 0) {
-    steps.push({ icon: '🔲', label: 'Vignette', fn: () => applyVignette(p.vignette / 100) });
+  // Pass 1: Heavy bilateral (main denoising)
+  steps.push({
+    icon: '🌫️', label: 'Denoise',
+    fn: () => bilateralFilter(radius + 1, sigma * 1.2, edgeProt)
+  });
+
+  // Pass 2+: Additional smoothing passes
+  for (let i = 1; i < passes; i++) {
+    steps.push({
+      icon: '🫧', label: `Smooth ${i+1}`,
+      fn: () => bilateralFilter(radius, sigma * 0.7, edgeProt)
+    });
   }
 
-  if (steps.length === 0) {
-    steps.push({ icon: '✨', label: 'Auto', fn: () => applyTonals({ brightness: 5, contrast: 10, highlights: -10, shadows: 10, whites: 5, blacks: -5 }) });
+  // Skin smoothing (extra pass with high sigma, low edge protect = softer)
+  if ((p.skinSmoothStrength || 0) > 20) {
+    const skinStr = (p.skinSmoothStrength / 100);
+    steps.push({
+      icon: '✨', label: 'Surface',
+      fn: () => bilateralFilter(Math.ceil(radius * skinStr + 1), sigma * skinStr * 1.5, 0.3)
+    });
+  }
+
+  // Micro detail boost (high-frequency recovery before sharpening)
+  if ((p.microDetailBoost || 0) > 0.1) {
+    steps.push({
+      icon: '🔎', label: 'Detail',
+      fn: () => microDetailRecover(p.microDetailBoost)
+    });
+  }
+
+  // Unsharp mask (edge sharpening)
+  if ((p.sharpAmount || 0) > 0.05) {
+    steps.push({
+      icon: '🔬', label: 'Sharpen',
+      fn: () => unsharpMask(p.sharpAmount, p.sharpRadius || 1.2, p.sharpThreshold || 4)
+    });
+  }
+
+  // Final light pass
+  if (p.finalSharpPass) {
+    steps.push({
+      icon: '💎', label: 'Finish',
+      fn: () => unsharpMask(0.25, 0.6, 6)
+    });
   }
 
   return steps;
 }
 
-// ─── PIXEL ALGORITHMS ────────────────────────────────────────────────────────
-
-async function applyTonals(p) {
-  const data = workCtx.getImageData(0, 0, workCanvas.width, workCanvas.height);
-  const d = data.data;
-  const len = d.length;
-
-  const brightAdj = (p.brightness || 0) * 2.0;
-  const cVal = p.contrast || 0;
-  const contrastF = (259 * (cVal + 255)) / (255 * (259 - cVal));
-
-  for (let i = 0; i < len; i += 4) {
-    let r = d[i], g = d[i+1], b = d[i+2];
-    // Brightness
-    r += brightAdj; g += brightAdj; b += brightAdj;
-    // Contrast
-    r = contrastF * (r - 128) + 128;
-    g = contrastF * (g - 128) + 128;
-    b = contrastF * (b - 128) + 128;
-    // Highlights & Shadows
-    const lum = 0.299*r + 0.587*g + 0.114*b;
-    if (p.highlights && lum > 180) {
-      const m = ((lum - 180) / 75) * p.highlights * 0.7;
-      r += m; g += m; b += m;
-    }
-    if (p.shadows && lum < 80) {
-      const m = ((80 - lum) / 80) * p.shadows * 0.7;
-      r += m; g += m; b += m;
-    }
-    if (p.whites && lum > 220) { const f = p.whites * 0.4; r+=f; g+=f; b+=f; }
-    if (p.blacks && lum < 40)  { const f = p.blacks * 0.4; r+=f; g+=f; b+=f; }
-    d[i]=clamp(r); d[i+1]=clamp(g); d[i+2]=clamp(b);
-  }
-  workCtx.putImageData(data, 0, 0);
-}
-
-async function bilateralSmooth(radius, sigmaColor) {
-  const W = workCanvas.width, H = workCanvas.height;
+// ── BILATERAL FILTER (edge-preserving smooth) ──────────────────────────────
+// This is the core uTool-like effect: blurs noise but keeps hard edges sharp
+async function bilateralFilter(radius, sigmaColor, edgeProt) {
+  const W = workC.width, H = workC.height;
   const src = workCtx.getImageData(0, 0, W, H);
   const dst = workCtx.createImageData(W, H);
   const s = src.data, d = dst.data;
-  const r = Math.max(1, Math.min(radius, 5));
-  const sigSq = (sigmaColor * sigmaColor * 2) || 1;
+
+  const r     = Math.max(1, Math.min(radius, 6));
+  const sigC2 = (sigmaColor * sigmaColor * 2) || 1;
+  const sigS2 = (r * r * 0.75) || 1;
+  // Edge protection: when edgeProt is high, we reduce influence of pixels across edges
+  const edgeMul = 1 + edgeProt * 5;
 
   for (let y = 0; y < H; y++) {
     for (let x = 0; x < W; x++) {
-      const ci = (y*W+x)*4;
-      const cR=s[ci], cG=s[ci+1], cB=s[ci+2];
-      let wR=0,wG=0,wB=0, sR=0,sG=0,sB=0;
-      for (let dy=-r; dy<=r; dy++) {
-        const ny = Math.min(H-1, Math.max(0, y+dy));
-        for (let dx=-r; dx<=r; dx++) {
-          const nx = Math.min(W-1, Math.max(0, x+dx));
-          const ni = (ny*W+nx)*4;
-          const nR=s[ni], nG=s[ni+1], nB=s[ni+2];
-          const sp = Math.exp(-(dx*dx+dy*dy)/(r*r*2+1));
-          const cd = (cR-nR)**2+(cG-nG)**2+(cB-nB)**2;
-          const cw = Math.exp(-cd/sigSq);
-          const w = sp*cw;
-          sR+=nR*w; wR+=w;
-          sG+=nG*w; wG+=w;
-          sB+=nB*w; wB+=w;
+      const ci = (y * W + x) * 4;
+      const cR = s[ci], cG = s[ci+1], cB = s[ci+2];
+
+      let wSum = 0, sR = 0, sG = 0, sB = 0;
+
+      for (let dy = -r; dy <= r; dy++) {
+        const ny = Math.min(H-1, Math.max(0, y + dy));
+        for (let dx = -r; dx <= r; dx++) {
+          const nx = Math.min(W-1, Math.max(0, x + dx));
+          const ni = (ny * W + nx) * 4;
+          const nR = s[ni], nG = s[ni+1], nB = s[ni+2];
+
+          // Spatial Gaussian
+          const spatial = Math.exp(-(dx*dx + dy*dy) / sigS2);
+
+          // Color/range Gaussian (key to bilateral — pixels with similar color get high weight)
+          const colorDist = (cR-nR)**2 + (cG-nG)**2 + (cB-nB)**2;
+          const colorW = Math.exp(-colorDist / sigC2);
+
+          const w = spatial * colorW;
+          sR += nR * w; sG += nG * w; sB += nB * w;
+          wSum += w;
         }
       }
-      d[ci]=clamp(sR/wR); d[ci+1]=clamp(sG/wG); d[ci+2]=clamp(sB/wB); d[ci+3]=s[ci+3];
+
+      d[ci]   = clamp(sR / wSum);
+      d[ci+1] = clamp(sG / wSum);
+      d[ci+2] = clamp(sB / wSum);
+      d[ci+3] = s[ci+3];
     }
   }
   workCtx.putImageData(dst, 0, 0);
 }
 
-async function unsharpMask(amount, threshold) {
-  const W = workCanvas.width, H = workCanvas.height;
-  const blurC = document.createElement('canvas');
-  blurC.width=W; blurC.height=H;
-  const bCtx = blurC.getContext('2d');
-  bCtx.filter = `blur(${Math.max(0.5, amount*2)}px)`;
-  bCtx.drawImage(workCanvas, 0, 0);
-  const orig = workCtx.getImageData(0,0,W,H);
-  const blurred = bCtx.getImageData(0,0,W,H);
-  const o=orig.data, b=blurred.data;
-  for (let i=0;i<o.length;i+=4) {
-    for (let c=0;c<3;c++) {
-      const diff = o[i+c]-b[i+c];
-      if (Math.abs(diff) > threshold*0.25) o[i+c]=clamp(o[i+c]+diff*amount);
+// ── MICRO DETAIL RECOVERY ─────────────────────────────────────────────────
+// Recovers fine textures lost during smoothing using a subtle high-pass blend
+async function microDetailRecover(strength) {
+  const W = workC.width, H = workC.height;
+
+  // Get current (smoothed)
+  const smooth = workCtx.getImageData(0, 0, W, H);
+
+  // Blur the smoothed version lightly
+  const bc = document.createElement('canvas');
+  bc.width = W; bc.height = H;
+  const bCtx = bc.getContext('2d');
+  bCtx.filter = 'blur(1px)';
+  bCtx.drawImage(workC, 0, 0);
+  const blurred = bCtx.getImageData(0, 0, W, H);
+
+  const sm = smooth.data, bl = blurred.data;
+
+  // High-pass = smoothed - blurred, blend back in
+  for (let i = 0; i < sm.length; i += 4) {
+    for (let c = 0; c < 3; c++) {
+      const hp  = sm[i+c] - bl[i+c]; // high-pass signal
+      sm[i+c] = clamp(sm[i+c] + hp * strength * 0.6);
     }
   }
-  workCtx.putImageData(orig,0,0);
+  workCtx.putImageData(smooth, 0, 0);
 }
 
-async function applyColor(p) {
-  const data = workCtx.getImageData(0,0,workCanvas.width,workCanvas.height);
-  const d=data.data;
-  const satF = 1+(p.saturation||0)/100;
-  for (let i=0;i<d.length;i+=4) {
-    let r=d[i], g=d[i+1], b=d[i+2];
-    const lum = 0.299*r+0.587*g+0.114*b;
-    if (p.saturation) { r=lum+satF*(r-lum); g=lum+satF*(g-lum); b=lum+satF*(b-lum); }
-    if (p.vibrance) {
-      const mx=Math.max(r,g,b), mn=Math.min(r,g,b);
-      const sat=mx>0?(mx-mn)/mx:0;
-      const vf=1+(p.vibrance/100)*(1-sat*1.2);
-      const l2=0.299*r+0.587*g+0.114*b;
-      r=l2+vf*(r-l2); g=l2+vf*(g-l2); b=l2+vf*(b-l2);
-    }
-    d[i]=clamp(r); d[i+1]=clamp(g); d[i+2]=clamp(b);
-  }
-  workCtx.putImageData(data,0,0);
-}
+// ── UNSHARP MASK ──────────────────────────────────────────────────────────
+async function unsharpMask(amount, blurR, threshold) {
+  const W = workC.width, H = workC.height;
+  const bc = document.createElement('canvas');
+  bc.width = W; bc.height = H;
+  const bCtx = bc.getContext('2d');
+  bCtx.filter = `blur(${Math.max(0.4, blurR)}px)`;
+  bCtx.drawImage(workC, 0, 0);
 
-async function applyColorTemp(temp) {
-  const data = workCtx.getImageData(0,0,workCanvas.width,workCanvas.height);
-  const d=data.data;
-  const warmR = temp > 0 ? temp*0.7 : temp*0.25;
-  const coolB = temp > 0 ? -temp*0.35 : -temp*0.7;
-  for (let i=0;i<d.length;i+=4) {
-    d[i]=clamp(d[i]+warmR);
-    d[i+2]=clamp(d[i+2]+coolB);
-  }
-  workCtx.putImageData(data,0,0);
-}
+  const orig    = workCtx.getImageData(0, 0, W, H);
+  const blurred = bCtx.getImageData(0, 0, W, H);
+  const o = orig.data, b = blurred.data;
 
-async function clarityBoost(strength) {
-  const W=workCanvas.width, H=workCanvas.height;
-  const bc=document.createElement('canvas'); bc.width=W; bc.height=H;
-  const bCtx=bc.getContext('2d');
-  bCtx.filter='blur(8px)';
-  bCtx.drawImage(workCanvas,0,0);
-  const orig=workCtx.getImageData(0,0,W,H);
-  const blur=bCtx.getImageData(0,0,W,H);
-  const o=orig.data, b=blur.data;
-  for (let i=0;i<o.length;i+=4) {
-    for (let c=0;c<3;c++) {
-      const diff=o[i+c]-b[i+c];
-      o[i+c]=clamp(o[i+c]+diff*Math.abs(strength)*(strength>0?1:-0.5));
+  for (let i = 0; i < o.length; i += 4) {
+    for (let c = 0; c < 3; c++) {
+      const diff = o[i+c] - b[i+c];
+      if (Math.abs(diff) > threshold) {
+        o[i+c] = clamp(o[i+c] + diff * amount);
+      }
     }
   }
-  workCtx.putImageData(orig,0,0);
-}
-
-async function applyVignette(strength) {
-  const W=workCanvas.width, H=workCanvas.height;
-  const grad=workCtx.createRadialGradient(W/2,H/2,Math.min(W,H)*0.25,W/2,H/2,Math.max(W,H)*0.75);
-  grad.addColorStop(0,'rgba(0,0,0,0)');
-  grad.addColorStop(1,`rgba(0,0,0,${Math.abs(strength)*0.85})`);
-  workCtx.fillStyle=grad;
-  workCtx.fillRect(0,0,W,H);
+  workCtx.putImageData(orig, 0, 0);
 }
 
 // ─── UTILS ────────────────────────────────────────────────────────────────────
-function clamp(v) { return Math.max(0, Math.min(255, Math.round(v))); }
-function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+function clamp(v) { return v < 0 ? 0 : v > 255 ? 255 : Math.round(v); }
+function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-// ─── UI STATE ─────────────────────────────────────────────────────────────────
-function showScanning(label) {
-  document.getElementById('analysis-idle').style.display = 'none';
-  document.getElementById('ai-result').classList.remove('visible');
-  document.getElementById('ai-scanning').classList.add('visible');
-  document.getElementById('scan-label').textContent = label;
-}
-
-function resetAnalysis() {
-  document.getElementById('analysis-idle').style.display = 'flex';
-  document.getElementById('ai-result').classList.remove('visible');
-  document.getElementById('ai-scanning').classList.remove('visible');
-}
-
-function showResult(params) {
-  document.getElementById('ai-scanning').classList.remove('visible');
-  document.getElementById('analysis-idle').style.display = 'none';
-  document.getElementById('ai-diagnosis').textContent = params.diagnosis || 'Analysis complete.';
-
-  const grid = document.getElementById('params-grid');
-  const keys = ['brightness','contrast','shadows','highlights','saturation','vibrance','sharpness','smoothing','noiseReduction','colorTemp','clarity','vignette'];
-  const labels = {
-    brightness:'Brightness', contrast:'Contrast', shadows:'Shadows', highlights:'Highlights',
-    saturation:'Saturation', vibrance:'Vibrance', sharpness:'Sharpness', smoothing:'Smoothing',
-    noiseReduction:'Denoise', colorTemp:'Temp', clarity:'Clarity', vignette:'Vignette'
-  };
-  grid.innerHTML = '';
-  keys.forEach(k => {
-    if (params[k] == null || params[k] === 0) return;
-    const val = params[k];
-    const el = document.createElement('div');
-    el.className = 'param-chip';
-    el.innerHTML = `<div class="param-name">${labels[k]||k}</div><div class="param-value">${val > 0 ? '+' : ''}${val}</div>`;
-    grid.appendChild(el);
-  });
-
-  document.getElementById('ai-result').classList.add('visible');
-}
-
+// ─── PROGRESS UI ─────────────────────────────────────────────────────────────
 function showSteps(steps) {
-  const strip = document.getElementById('steps-strip');
-  strip.innerHTML = '';
+  const el = document.getElementById('proc-steps');
+  el.innerHTML = '';
   steps.forEach((s, i) => {
-    const el = document.createElement('div');
-    el.className = 'step-item';
-    el.id = 'step-' + i;
-    el.innerHTML = `<div class="step-item-icon">${s.icon}</div><div class="step-item-label">${s.label}</div>`;
-    strip.appendChild(el);
+    const d = document.createElement('div');
+    d.className = 'ps-item';
+    d.id = 'ps-' + i;
+    d.innerHTML = `<div class="ps-item-icon">${s.icon}</div><div class="ps-item-label">${s.label}</div>`;
+    el.appendChild(d);
   });
-  strip.classList.add('visible');
-  document.getElementById('progress-bar-outer').classList.add('visible');
-  document.getElementById('progress-bar-inner').style.width = '0%';
+  el.classList.add('on');
+  document.getElementById('ps-bar-wrap').classList.add('on');
+  setBar(0);
 }
 
-function activateStep(i, total) {
-  document.querySelectorAll('.step-item').forEach((el, j) => {
-    if (j < i) el.className = 'step-item done';
-    else if (j === i) el.className = 'step-item active';
-    else el.className = 'step-item';
+function activateStep(i) {
+  document.querySelectorAll('.ps-item').forEach((el, j) => {
+    el.className = 'ps-item' + (j < i ? ' done' : j === i ? ' active' : '');
   });
 }
 
 function doneStep(i) {
-  const el = document.getElementById('step-' + i);
-  if (el) el.className = 'step-item done';
+  const el = document.getElementById('ps-' + i);
+  if (el) el.className = 'ps-item done';
 }
 
-function setProgress(pct) {
-  document.getElementById('progress-bar-inner').style.width = pct + '%';
+function setBar(pct) {
+  document.getElementById('ps-bar').style.width = pct + '%';
 }
 
 function hideSteps() {
-  document.getElementById('steps-strip').classList.remove('visible');
-  document.getElementById('progress-bar-outer').classList.remove('visible');
+  document.getElementById('proc-steps').classList.remove('on');
+  document.getElementById('ps-bar-wrap').classList.remove('on');
+}
+
+// ─── AI UI ────────────────────────────────────────────────────────────────────
+function resetAI() {
+  document.getElementById('ai-idle').style.display = 'flex';
+  document.getElementById('ai-scan').classList.remove('on');
+  document.getElementById('ai-res').classList.remove('on');
+}
+
+function showScan(txt) {
+  document.getElementById('ai-idle').style.display = 'none';
+  document.getElementById('ai-res').classList.remove('on');
+  document.getElementById('ai-scan').classList.add('on');
+  document.getElementById('scan-txt').textContent = txt;
+  document.getElementById('scan-fill').style.width = '0%';
+}
+
+async function animateScan() {
+  const fill = document.getElementById('scan-fill');
+  const msgs = [
+    'Analyzing noise & grain...',
+    'Detecting blur levels...',
+    'Computing smoothing recipe...',
+    'Preparing enhancement plan...'
+  ];
+  for (let i = 0; i < msgs.length; i++) {
+    document.getElementById('scan-txt').textContent = msgs[i];
+    fill.style.width = ((i + 1) / msgs.length * 80) + '%';
+    await delay(350);
+  }
+}
+
+function showResult(p) {
+  document.getElementById('ai-scan').classList.remove('on');
+  document.getElementById('ai-idle').style.display = 'none';
+
+  document.getElementById('ai-diag').textContent = p.diagnosis || 'Analysis complete.';
+
+  const pr = document.getElementById('params-row');
+  pr.innerHTML = '';
+
+  const show = [
+    { k: 'noiseLevel',        label: 'Noise',      unit: '%'  },
+    { k: 'blurLevel',         label: 'Blur',        unit: '%'  },
+    { k: 'smoothingPasses',   label: 'Passes',      unit: 'x'  },
+    { k: 'smoothingRadius',   label: 'Radius',      unit: 'px' },
+    { k: 'smoothingSigma',    label: 'Sigma',       unit: ''   },
+    { k: 'sharpAmount',       label: 'Sharpen',     unit: ''   },
+    { k: 'microDetailBoost',  label: 'Detail',      unit: ''   },
+    { k: 'skinSmoothStrength',label: 'Surface',     unit: '%'  },
+    { k: 'edgeProtection',    label: 'Edge Prot',   unit: '%'  },
+  ];
+
+  show.forEach(({ k, label, unit }) => {
+    const v = p[k];
+    if (v == null || v === 0 || v === false) return;
+    const tag = document.createElement('div');
+    tag.className = 'param-tag';
+    const valStr = typeof v === 'number' ? (Number.isInteger(v) ? v : v.toFixed(2)) : v;
+    tag.innerHTML = `<span class="param-tag-name">${label}</span><span class="param-tag-val">${valStr}${unit}</span>`;
+    pr.appendChild(tag);
+  });
+
+  document.getElementById('ai-res').classList.add('on');
 }
 
 // ─── SLIDER COMPARE ───────────────────────────────────────────────────────────
-btnCompare.addEventListener('click', () => {
-  if (!enhancedCanvas) return;
+btnCmp.addEventListener('click', () => {
+  if (!enhDone) return;
   sliderOpen = !sliderOpen;
   if (sliderOpen) {
     scWrap.classList.add('visible');
-    document.getElementById('panels').style.display = 'none';
-    btnCompare.textContent = 'Side by Side';
-    sliderPos = 0.5;
+    document.getElementById('canvas-row').style.display = 'none';
+    btnCmp.textContent = 'Side by Side';
+    sliderX = 0.5;
     updateSlider();
   } else {
     scWrap.classList.remove('visible');
-    document.getElementById('panels').style.display = '';
-    btnCompare.textContent = 'Compare';
+    document.getElementById('canvas-row').style.display = '';
+    btnCmp.textContent = 'Before / After';
   }
 });
 
-scWrap.addEventListener('mousedown', e => { sliderDragging=true; moveSlider(e); });
-scWrap.addEventListener('touchstart', e => { sliderDragging=true; moveSlider(e.touches[0]); }, {passive:true});
-document.addEventListener('mousemove', e => { if(sliderDragging) moveSlider(e); });
-document.addEventListener('touchmove', e => { if(sliderDragging) moveSlider(e.touches[0]); }, {passive:true});
-document.addEventListener('mouseup', ()=>sliderDragging=false);
-document.addEventListener('touchend', ()=>sliderDragging=false);
+scWrap.addEventListener('mousedown',  e => { sliderDrag = true; moveSlider(e); });
+scWrap.addEventListener('touchstart', e => { sliderDrag = true; moveSlider(e.touches[0]); }, { passive: true });
+document.addEventListener('mousemove',  e => { if (sliderDrag) moveSlider(e); });
+document.addEventListener('touchmove',  e => { if (sliderDrag) moveSlider(e.touches[0]); }, { passive: true });
+document.addEventListener('mouseup',  () => sliderDrag = false);
+document.addEventListener('touchend', () => sliderDrag = false);
 
 function moveSlider(e) {
-  const rect = scWrap.getBoundingClientRect();
-  sliderPos = Math.max(0.03, Math.min(0.97, (e.clientX-rect.left)/rect.width));
+  const r = scWrap.getBoundingClientRect();
+  sliderX = Math.max(0.02, Math.min(0.98, (e.clientX - r.left) / r.width));
   updateSlider();
 }
 
 function updateSlider() {
-  const pct = (sliderPos*100).toFixed(1)+'%';
-  scLine.style.left = pct;
-  scEnhLayer.style.clipPath = `inset(0 ${(100-sliderPos*100).toFixed(1)}% 0 0)`;
+  scDivider.style.left = (sliderX * 100) + '%';
+  scAfter.style.clipPath = `inset(0 ${((1 - sliderX) * 100).toFixed(2)}% 0 0)`;
 }
 
-// ─── DOWNLOAD ─────────────────────────────────────────────────────────────────
-btnDownload.addEventListener('click', () => {
-  if (!enhancedCanvas) return;
-  // Re-render at full source resolution
-  const fc=document.createElement('canvas');
-  fc.width=srcCanvas.width; fc.height=srcCanvas.height;
-  const fCtx=fc.getContext('2d');
-  fCtx.drawImage(workCanvas, 0, 0, srcCanvas.width, srcCanvas.height);
-  // Actually just export workCanvas which is full res
-  const link=document.createElement('a');
-  const base=currentFileName.replace(/\.[^.]+$/, '')||'image';
-  link.download=base+'-aura-enhanced.png';
-  link.href=workCanvas.toDataURL('image/png');
+// ─── DOWNLOAD ────────────────────────────────────────────────────────────────
+btnDl.addEventListener('click', () => {
+  if (!workCanvas) return;
+  const link = document.createElement('a');
+  link.download = (fname.replace(/\.[^.]+$/, '') || 'photo') + '-clearai.png';
+  link.href = workCanvas.toDataURL('image/png');
   link.click();
-  toast('⬇️', 'Downloading enhanced image!');
+  toast('⬇️', 'Downloading...');
 });
 
-// ─── TOAST ────────────────────────────────────────────────────────────────────
-let toastTimer;
+// ─── TOAST ───────────────────────────────────────────────────────────────────
+let toastT;
 function toast(icon, msg) {
-  const el=document.getElementById('toast');
-  document.getElementById('toast-icon').textContent=icon;
-  document.getElementById('toast-msg').textContent=msg;
+  document.getElementById('ti').textContent = icon;
+  document.getElementById('tm').textContent = msg;
+  const el = document.getElementById('toast');
   el.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>el.classList.remove('show'), 3200);
+  clearTimeout(toastT);
+  toastT = setTimeout(() => el.classList.remove('show'), 3200);
 }
 </script>
 </body>
